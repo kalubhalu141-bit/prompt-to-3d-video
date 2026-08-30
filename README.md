@@ -82,12 +82,22 @@ D:\prompt-to-3d-video\
 
 The **🎥 3D Video** tab is the heart of this merger. It combines patterns from:
 
-- **AnimateDiff / Stable Video Diffusion** — temporal coherence via eased motion
+- **Three.js** (109k★, MIT) — the core WebGL engine (CDN load)
+- **pmndrs/postprocessing** (2.8k★, Zlib) — EffectComposer-style pass chain
+  (bloom → LUT → grain → letterbox)
+- **AnimateDiff** (Apache-2.0) — temporal coherence via eased motion
+- **Wan 2.2** (Alibaba, Apache-2.0) — cinematic-aesthetic data with
+  lighting / composition / contrast / color-tone labels
+- **LTX-Video** (Lightricks, Apache-2.0) — fast-iteration framing
+- **Open-Sora** (HPCAI, Apache-2.0) — open video production
 - **WebGPU-Video-Diffusion** (Text-to-Video Zero) — 8-frame keyframe path
   (in-browser mock; real ONNX inference needs the ~4 GB model)
-- **PANDORA** — the screenplay → storyboard → shot-list pre-prod flow
-  (clean-room re-implementation, no GPL code)
+- **HunyuanVideo** (Tencent, custom community license — cited only) — 13B
+  T2V model; not bundled, see `THIRD_PARTY.md` for license terms
+- **PANDORA** (GPL v3 — inspiration only) — the screenplay → storyboard →
+  shot-list pre-prod flow (clean-room re-implementation, no GPL code)
 - **Deforum** — eased camera moves (orbit / crane / reveal / push-orbit)
+- **Lottie** (Airbnb, MIT) — kinetic-title 2D engine inspiration
 - **Seedance Studio / Infinity Video Generator** — scene registry,
   MediaRecorder export, LUT pipeline
 
@@ -160,6 +170,36 @@ node server.js
 You can wire any of the Cinema Studio buttons to call Ollama via
 `POST /api/generate`. The rule-based version is the offline default.
 
+## 🎞 Hooking a real local T2V model (Wan 2.2 / LTX-Video / HunyuanVideo / Open-Sora)
+
+The 🎥 3D Video tab ships with **procedural Three.js / 2D scenes** that
+synthesise motion from a prompt. If you have the GPU and want **real
+generative video**, you can run any of the open-source T2V models locally
+and pipe its output into this app's MediaRecorder / ffmpeg export stage.
+
+| Model | Stars | License | VRAM | Best for |
+|---|---|---|---|---|
+| **Wan 2.2** (5B) | 3.5k | Apache-2.0 | 24 GB (4090) | Cinematic T2V/I2V @ 720p 24fps |
+| **LTX-Video** (10B) | 5k | Apache-2.0 | 12–24 GB | Real-time fast iteration |
+| **Open-Sora** (11B) | 29k | Apache-2.0 | 24+ GB | Highest-quality open T2V |
+| **HunyuanVideo** (13B) | 4.5k | Tencent Community | 24+ GB | Tencent's flagship (territory restrictions) |
+| **AnimateDiff** | 12k | Apache-2.0 | 12 GB | Animate any SD-1.5 checkpoint |
+| **StableAnimator** | 1.4k | MIT | 12+ GB | Pose-driven human animation |
+
+All six are listed in `THIRD_PARTY.md` with full license terms and a
+"Wan 2.2 → render to `out/clips/scene1.mp4` → ffmpeg into `out/film.mp4`"
+recipe. To integrate one of them with this app, run its inference CLI
+and then either:
+
+- Drop the resulting MP4 into a `clips/` folder, and use the existing
+  🎥 3D Video tab's MediaRecorder path to add LUTs / grain / letterbox.
+- Or open the file in any video editor and use the 🎬 Cinema Studio's
+  per-shot FLUX keyframes as a storyboard reference.
+
+The local models listed above are **not bundled** in this repo — they're
+multi-GB and would break the keyless-instant-install promise. They're
+cited so you know which models inspired the design and how to swap one in.
+
 ## 🎬 Cinema pre-prod flow
 
 ```
@@ -182,7 +222,19 @@ MIT. See [`LICENSE`](LICENSE) and [`THIRD_PARTY.md`](THIRD_PARTY.md).
 ## 🙏 Credits
 
 The merged open-source inspirations (every one cited with license in `THIRD_PARTY.md`):
-[AnimateDiff](https://github.com/guoyww/AnimateDiff) · [StableAnimator](https://github.com/Francis-Rings/StableAnimator) · [Open-Generative-AI](https://github.com/Anil-matcha/Open-Generative-AI) · [WebGPU-Video-Diffusion](https://github.com/WebGPU-Video-Diffusion/WebGPU-Video-Diffusion) · [PANDORA](https://github.com/22eme-Arkane/PANDORA) · [Deforum](https://github.com/deforum-art/sd-webui-deforum)
+
+**Foundation models (T2V / I2V)**
+- [AnimateDiff](https://github.com/guoyww/AnimateDiff) · [Wan 2.2](https://github.com/Wan-Video/Wan2.2) · [LTX-Video](https://github.com/Lightricks/LTX-Video) · [Open-Sora](https://github.com/hpcaitech/Open-Sora) — all Apache-2.0
+- [HunyuanVideo](https://github.com/Tencent-Hunyuan/HunyuanVideo) — Tencent Community License (cited only, NOT bundled)
+- [StableAnimator](https://github.com/Francis-Rings/StableAnimator) · [Open-Generative-AI](https://github.com/Anil-matcha/Open-Generative-AI) — MIT
+- [WebGPU-Video-Diffusion](https://github.com/WebGPU-Video-Diffusion/WebGPU-Video-Diffusion) — academic (no LICENSE)
+
+**VFX / post-processing / motion graphics**
+- [Three.js](https://github.com/mrdoob/three.js) · [pmndrs/postprocessing](https://github.com/pmndrs/postprocessing) · [Lottie](https://github.com/airbnb/lottie-web) · [Filament](https://github.com/google/filament) · [three-mesh-bvh](https://github.com/gkjohnson/three-mesh-bvh)
+
+**Cinema pre-production / camera moves**
+- [PANDORA](https://github.com/22eme-Arkane/PANDORA) — GPL v3 (inspiration only)
+- [Deforum](https://github.com/deforum-art/sd-webui-deforum) — Other license (inspiration only)
 
 The user's own repos (the actual base code, MIT, kalubhalu141-bit):
 [stellarforge](https://github.com/kalubhalu141-bit/stellarforge) · [commercial-video-studio](https://github.com/kalubhalu141-bit/commercial-video-studio) · [cinematic-dating-video](https://github.com/kalubhalu141-bit/cinematic-dating-video) · [blender-ai-studio](https://github.com/kalubhalu141-bit/blender-ai-studio) · [seedance-studio](https://github.com/kalubhalu141-bit/seedance-studio) (local)
