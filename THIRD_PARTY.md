@@ -124,6 +124,59 @@ MediaRecorder / ffmpeg export stage** for real generative video.
 
 ---
 
+## Inspirations — talking-head / audio-driven animation / lip-sync
+
+| Project | Source | License | Stars | What we drew from |
+|---|---|---|---|---|
+| **Whisper** (OpenAI) | [openai/whisper](https://github.com/openai/whisper) | MIT | 108k | Robust speech recognition — the foundation of every free local ASR pipeline. |
+| **whisper.cpp** | [ggml-org/whisper.cpp](https://github.com/ggml-org/whisper.cpp) | MIT | 53k | C/C++ port of Whisper, runs on anything (CPU, Metal, CUDA, Vulkan). The fastest local ASR. |
+| **Faster-Whisper** (SYSTRAN) | [SYSTRAN/faster-whisper](https://github.com/SYSTRAN/faster-whisper) | MIT | 25k | CTranslate2-accelerated Whisper — 4× faster with same accuracy. |
+| **Buzz** | [chidiwilliams/buzz](https://github.com/chidiwilliams/buzz) | MIT | 21k | Desktop app for offline Whisper transcription + translation. |
+| **WhisperSpeech** | [WhisperSpeech/WhisperSpeech](https://github.com/WhisperSpeech/WhisperSpeech) | MIT | 4.6k | Open-source TTS by inverting Whisper. |
+| **EasyVtuber** | [yuyuyzl/EasyVtuber](https://github.com/yuyuyzl/EasyVtuber) | MIT | 3k | Talking-head-anime 3-based VTuber (VTube Studio alternative). |
+| **LivePortrait** (ComfyUI) | [kijai/ComfyUI-LivePortraitKJ](https://github.com/kijai/ComfyUI-LivePortraitKJ) | MIT | 2.2k | ComfyUI LivePortrait nodes — image → video portrait animation. |
+| **talking-head-anime-demo** | [pkhungurn/talking-head-anime-demo](https://github.com/pkhungurn/talking-head-anime-demo) | MIT | 2k | Talking Head Anime from a Single Image (1, 2, 3). |
+| **uLipSync** (hecomi) | [hecomi/uLipSync](https://github.com/hecomi/uLipSync) | MIT | 1.7k | MFCC-based Unity lip-sync plugin (Job System + Burst). |
+| **TalkingHead** (3D) | [met4citizen/TalkingHead](https://github.com/met4citizen/TalkingHead) | MIT | 1.5k | Real-time JavaScript class for 3D lip-sync avatars. |
+| **ComfyUI_Sonic** | [smthemex/ComfyUI_Sonic](https://github.com/smthemex/ComfyUI_Sonic) | — | 1.1k | Shifting focus to global audio perception — Sonic audio-driven portrait. |
+| **auto-subtitle** | [m1guelpf/auto-subtitle](https://github.com/m1guelpf/auto-subtitle) | MIT | 2.3k | Auto-generate and overlay subtitles for any video. |
+
+---
+
+## Inspirations — 3D / R3F / WebGPU / Babylon ecosystem
+
+| Project | Source | License | Stars | What we drew from |
+|---|---|---|---|---|
+| **React Three Fiber** | [pmndrs/react-three-fiber](https://github.com/pmndrs/react-three-fiber) | MIT | 32k | A React renderer for Three.js. The de-facto R3F framework. |
+| **drei** | [pmndrs/drei](https://github.com/pmndrs/drei) | MIT | 9.8k | Useful helpers for react-three-fiber. Cited for the postprocessing stack. |
+| **GSAP** | [greensock/gsap-skills](https://github.com/greensock/gsap-skills) | MIT (skills) / "no charge" (core) | 14.5k | Official AI skills for GSAP — declarative timeline animation. Cited for camera-move easing. |
+| **DL Streamer** (open-edge-platform) | [open-edge-platform/dlstreamer](https://github.com/open-edge-platform/dlstreamer) | MIT | 623 | Intel GStreamer-based deep-learning video pipeline. |
+| **simple-peer** | [feross/simple-peer](https://github.com/feross/simple-peer) | MIT | 7.8k | Simple WebRTC video, voice, and data channels. |
+| **Vibe-Workflow** | [SamurAIGPT/Vibe-Workflow](https://github.com/SamurAIGPT/Vibe-Workflow) | Apache-2.0 | 563 | Free open-source alternative to Weavy AI / Krea Nodes / Freepik — node-based AI workflow builder. |
+| **ai-shortVideo-pipeline** | [myccarl/ai-shortVideo-pipeline](https://github.com/myccarl/ai-shortVideo-pipeline) | — | 574 | End-to-end AI short-video production pipeline. FastAPI orchestrator. |
+| **streamio-ffmpeg** | [streamio/streamio-ffmpeg](https://github.com/streamio/streamio-ffmpeg) | MIT | 1.7k | Simple powerful Ruby ffmpeg wrapper. |
+| **goffmpeg** | [xfrr/goffmpeg](https://github.com/xfrr/goffmpeg) | MIT | 836 | Dev-friendly FFMPEG wrapper written in Go. |
+
+---
+
+## Inspirations — 2D animation / motion graphics
+
+| Project | Source | License | Stars | What we drew from |
+|---|---|---|---|---|
+| **lottie-web** (Airbnb) | [airbnb/lottie-web](https://github.com/airbnb/lottie-web) | MIT | 32k | After Effects → web animations. (Already in main list — promoted here for prominence.) |
+| **mo.js** | [mojs/mojs](https://github.com/mojs/mojs) | MIT | 19k | Motion graphics toolbelt for the web. |
+| **GSAP** | [greensock/gsap-skills](https://github.com/greensock/gsap-skills) | MIT | 14.5k | Industry-standard declarative timeline animation. |
+| **Tixl** | [tixl3d/tixl](https://github.com/tixl3d/tixl) | — | 5k | Realtime node-based motion graphics. |
+| **Motionity** | [alyssaxuu/motionity](https://github.com/alyssaxuu/motionity) | — | 4k | Web-based motion graphics editor. |
+| **Astrofox** | [astrofox-io/astrofox](https://github.com/astrofox-io/astrofox) | — | 2k | Audio → motion graphics. |
+| **Pixel Composer** | [Ttanasart-pt/Pixel-Composer](https://github.com/Ttanasart-pt/Pixel-Composer) | — | 1.4k | Node-based VFX editor for pixel art. |
+| **nexrender** | [inlife/nexrender](https://github.com/inlife/nexrender) | — | 1.9k | Data-driven After Effects render automation. |
+| **Vue-Lottie** | [chenqingspring/vue-lottie](https://github.com/chenqingspring/vue-lottie) | — | 1.3k | Lottie for Vue. |
+| **react-design-editor** | [salgum1114/react-design-editor](https://github.com/salgum1114/react-design-editor) | MIT | 1.7k | React design editor (image/video/HTML5). |
+| **happy-birthday (gsap example)** | [faahim/happy-birthday](https://github.com/faahim/happy-birthday) | MIT | 1.5k | GSAP demo — a real-world motion example. |
+
+---
+
 ## External services (called by this app, not merged)
 
 | Service | Used for | Auth |
