@@ -1,0 +1,2364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>∞ Infinity Video Generator — Free AI Video Studio</title>
+<meta name="description" content="Free AI video studio: 48 AI engines, image generation, stock library, TTS voiceover, translation, GitHub repo skills, free LLM copilot (Ollama), on-device AI models, infinite ideas on every page. No keys, no watermark.">
+<meta name="theme-color" content="#0a0b12">
+<style>
+  :root{
+    --bg:#0a0b12; --bg2:#111320; --card:#151827; --card2:#1b1f30; --line:#262b3f;
+    --txt:#e9ecf5; --mut:#9aa3bd; --acc:#7c5cff; --acc2:#27e1c1; --acc3:#ff5e7e; --gold:#ffb347;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--txt);font-family:'Segoe UI',system-ui,-apple-system,sans-serif;min-height:100vh}
+  a{color:var(--acc2);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:1280px;margin:0 auto;padding:0 18px}
+  header{position:sticky;top:0;z-index:50;background:rgba(10,11,18,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .hdr{display:flex;align-items:center;gap:14px;padding:12px 0;flex-wrap:wrap}
+  .logo{font-size:26px;font-weight:800;letter-spacing:-.5px;background:linear-gradient(90deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent;white-space:nowrap}
+  .logo small{font-size:12px;color:var(--mut);font-weight:400;margin-left:8px;letter-spacing:0}
+  .status{margin-left:auto;font-size:12px;color:var(--mut);display:flex;align-items:center;gap:8px}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--acc2);box-shadow:0 0 8px var(--acc2);animation:pulse 2s infinite}
+  @keyframes pulse{50%{opacity:.4}}
+  nav{display:flex;gap:4px;overflow-x:auto;padding:8px 0 12px;scrollbar-width:thin}
+  nav button{background:transparent;border:1px solid transparent;color:var(--mut);padding:8px 14px;border-radius:10px;cursor:pointer;font-size:13.5px;white-space:nowrap;transition:.15s}
+  nav button:hover{color:var(--txt);background:var(--card2)}
+  nav button.on{color:#fff;background:linear-gradient(135deg,var(--acc),#5b3df0);border-color:transparent;box-shadow:0 4px 14px rgba(124,92,255,.35)}
+  main{padding:20px 0 80px}
+  .tab{display:none}
+  .tab.on{display:block;animation:fade .25s}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1}}
+  .grid{display:grid;gap:14px}
+  .g2{grid-template-columns:repeat(auto-fit,minmax(340px,1fr))}
+  .g3{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+  .card h3{font-size:15px;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+  .card h3 .tag{font-size:10px;background:var(--card2);color:var(--mut);padding:2px 8px;border-radius:20px;font-weight:400}
+  label{display:block;font-size:12px;color:var(--mut);margin:10px 0 4px}
+  input[type=text],input[type=number],input[type=password],textarea,select{
+    width:100%;background:var(--bg2);border:1px solid var(--line);color:var(--txt);
+    border-radius:10px;padding:9px 12px;font-size:13.5px;outline:none;transition:.15s;font-family:inherit}
+  input:focus,textarea:focus,select:focus{border-color:var(--acc)}
+  textarea{min-height:80px;resize:vertical}
+  .btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--acc),#5b3df0);color:#fff;border:none;
+    padding:10px 18px;border-radius:10px;cursor:pointer;font-size:13.5px;font-weight:600;transition:.15s;font-family:inherit}
+  .btn:hover{filter:brightness(1.15);transform:translateY(-1px)}
+  .btn.green{background:linear-gradient(135deg,#0e9f8a,var(--acc2));color:#04231d}
+  .btn.gray{background:var(--card2);color:var(--txt);border:1px solid var(--line)}
+  .btn.red{background:linear-gradient(135deg,#c22d4e,var(--acc3))}
+  .btn.sm{padding:6px 12px;font-size:12px}
+  .btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+  .out{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:14px;margin-top:12px;font-size:13.5px;line-height:1.65;white-space:pre-wrap;word-break:break-word;max-height:520px;overflow:auto}
+  .out:empty{display:none}
+  .out b{color:var(--acc2)}
+  .muted{color:var(--mut);font-size:12.5px}
+  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:end}
+  .row>*{flex:1;min-width:120px}
+  .row .btn{flex:0 0 auto}
+  .pill{display:inline-block;background:var(--card2);border:1px solid var(--line);border-radius:20px;padding:4px 12px;font-size:12px;color:var(--mut);margin:3px 3px 0 0}
+  .pill.g{color:var(--acc2);border-color:#1d4a40}
+  .pill.gold{color:var(--gold);border-color:#4a3a1d}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+  .chips button{background:var(--card2);border:1px solid var(--line);color:var(--txt);border-radius:20px;padding:5px 12px;font-size:12px;cursor:pointer;transition:.15s}
+  .chips button:hover{border-color:var(--acc);color:#fff}
+  .chips button.on{background:var(--acc);border-color:var(--acc);color:#fff}
+  .imgbox{border-radius:10px;overflow:hidden;border:1px solid var(--line);background:var(--bg2)}
+  .imgbox img{width:100%;display:block;aspect-ratio:16/9;object-fit:cover}
+  .imgbox .cap{padding:8px 10px;font-size:12px;color:var(--mut);display:flex;justify-content:space-between;gap:8px;align-items:center}
+  .item-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-top:12px}
+  .item{background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden;cursor:pointer;transition:.15s}
+  .item:hover{border-color:var(--acc);transform:translateY(-2px)}
+  .item img{width:100%;aspect-ratio:16/10;object-fit:cover;display:block;background:var(--bg2)}
+  .item .meta{padding:8px 10px;font-size:11.5px;color:var(--mut);line-height:1.4}
+  .engine-form{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:8px}
+  .engine-form .ef-head{display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .engine-form .ef-head b{font-size:13px}
+  .engine-form .ef-head span{font-size:10.5px;color:var(--acc2);background:rgba(39,225,193,.1);padding:2px 8px;border-radius:20px}
+  .engine-form input{font-size:12.5px;padding:7px 10px}
+  .engine-form .btn{padding:7px 12px;font-size:12px}
+  .engine-res{font-size:12px;color:var(--mut);margin-top:6px;max-height:220px;overflow:auto;white-space:pre-wrap;background:var(--bg2);border:1px solid var(--line);border-radius:8px;padding:10px;display:none}
+  .engine-res.show{display:block}
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+  .toolbar input{max-width:320px}
+  .msg{padding:10px 14px;border-radius:10px;font-size:13px;margin-top:10px;display:none}
+  .msg.show{display:block}
+  .msg.ok{background:rgba(39,225,193,.08);border:1px solid #1d4a40;color:var(--acc2)}
+  .msg.err{background:rgba(255,94,126,.08);border:1px solid #5c1f31;color:var(--acc3)}
+  .msg.info{background:rgba(124,92,255,.08);border:1px solid #3b2f77;color:#b3a0ff}
+  .chat{display:flex;flex-direction:column;gap:10px;max-height:480px;overflow:auto;padding:4px}
+  .bub{max-width:80%;padding:10px 14px;border-radius:14px;font-size:13.5px;line-height:1.6;white-space:pre-wrap}
+  .bub.user{background:var(--acc);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+  .bub.ai{background:var(--card2);border:1px solid var(--line);align-self:flex-start;border-bottom-left-radius:4px}
+  .bub.sys{background:rgba(39,225,193,.06);border:1px solid #1d4a40;color:var(--acc2);align-self:center;font-size:12px}
+  .chatbar{display:flex;gap:8px;margin-top:10px}
+  .chatbar input{flex:1}
+  .loader{width:22px;height:22px;border:3px solid var(--line);border-top-color:var(--acc);border-radius:50%;animation:spin .8s linear infinite;display:inline-block;vertical-align:middle}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .progress{height:6px;background:var(--bg2);border-radius:6px;overflow:hidden;margin-top:8px}
+  .progress div{height:100%;background:linear-gradient(90deg,var(--acc),var(--acc2));width:0%;transition:width .3s}
+  .model-row{display:flex;align-items:center;gap:10px;padding:10px;border:1px solid var(--line);border-radius:10px;margin-top:8px;background:var(--bg2)}
+  .model-row .info{flex:1}
+  .model-row .info b{font-size:13px}
+  .model-row .info p{font-size:11.5px;color:var(--mut)}
+  .model-row textarea{min-height:52px;font-size:12.5px}
+  .tree-line{padding:3px 0;font-size:12.5px;color:var(--mut);cursor:pointer;display:flex;gap:8px;align-items:center}
+  .tree-line:hover{color:var(--acc2)}
+  .tree-line .sz{margin-left:auto;font-size:11px;opacity:.7}
+  code{background:var(--bg2);border:1px solid var(--line);border-radius:6px;padding:1px 6px;font-size:12px;color:var(--acc2)}
+  .stat-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:14px}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;text-align:center}
+  .stat .n{font-size:26px;font-weight:800;background:linear-gradient(90deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .stat .l{font-size:11px;color:var(--mut);margin-top:2px}
+  h2.sec{font-size:20px;margin:6px 0 14px;display:flex;align-items:center;gap:10px}
+  h2.sec span{font-size:12px;color:var(--mut);font-weight:400}
+  .divider{height:1px;background:var(--line);margin:26px 0}
+  .hint{font-size:11.5px;color:var(--mut);margin-top:6px;line-height:1.5}
+  .engine-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+  .group-label{grid-column:1/-1;font-size:12px;text-transform:uppercase;letter-spacing:1.5px;color:var(--mut);margin-top:10px;border-bottom:1px solid var(--line);padding-bottom:6px}
+  @media(max-width:640px){.row>*{min-width:100%}}
+  /* ∞ infinite features feed (every page) */
+  .inf-feed{margin-top:6px}
+  .inf-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+  .inf-head b{font-size:16px;background:linear-gradient(90deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .inf-head span{font-size:11.5px;color:var(--mut)}
+  .inf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+  .inf-card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px;cursor:pointer;transition:.15s;display:flex;flex-direction:column;gap:6px}
+  .inf-card:hover{border-color:var(--acc2);transform:translateY(-2px);box-shadow:0 6px 18px rgba(39,225,193,.12)}
+  .inf-card .inf-emoji{font-size:20px}
+  .inf-card .inf-title{font-size:12.5px;color:var(--txt);line-height:1.4;font-weight:600}
+  .inf-card .inf-desc{font-size:10.5px;color:var(--mut);line-height:1.4}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="hdr">
+      <div class="logo">∞ Infinity Video Generator<small>free AI studio · no keys · no watermark</small></div>
+      <div class="status"><span class="dot"></span><span id="healthTxt">connecting…</span></div>
+    </div>
+    <nav id="nav">
+      <button data-t="studio" class="on">🎬 Studio</button>
+      <button data-t="workbench">🧠 Workbench · 56 AI Engines</button>
+      <button data-t="image">🎨 Image Studio</button>
+      <button data-t="stock">📚 Stock Library</button>
+      <button data-t="copilot">⚡ AI Copilot</button>
+      <button data-t="device">📡 On-Device AI</button>
+      <button data-t="github">🐙 GitHub Hub</button>
+      <button data-t="trends">🔥 Trends</button>
+      <button data-t="lang">🌐 Translate</button>
+      <button data-t="tts">🗣 TTS Voiceover</button>
+      <button data-t="forge">⚒️ Thumbnail Forge</button>
+      <button data-t="dvideo">🎥 3D Video</button>
+      <button data-t="cinema">🎬 Cinema Studio</button>
+      <button data-t="research">🔬 Topic Research</button>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+
+<!-- ============ STUDIO ============ -->
+<section class="tab on" id="tab-studio">
+  <h2 class="sec">🎬 Create <span>prompt → plan → images → voice → publish</span></h2>
+  <div class="grid g2">
+    <div class="card">
+      <h3>1 · Idea <span class="tag">start here</span></h3>
+      <label>What is your video about?</label>
+      <textarea id="stIdea" placeholder="e.g. a cinematic tour of a futuristic city at night, neon lights, flying cars…">a cinematic tour of a futuristic city at night with neon lights and flying cars</textarea>
+      <label>Platform</label>
+      <select id="stPlatform">
+        <option value="youtube">YouTube</option><option value="shorts">YouTube Shorts</option>
+        <option value="tiktok">TikTok</option><option value="instagram">Instagram Reels</option><option value="linkedin">LinkedIn</option>
+      </select>
+      <label>Duration (seconds)</label>
+      <input type="number" id="stDur" value="30" min="5" max="300">
+      <div style="margin-top:12px" class="row">
+        <button class="btn" id="stPlan">Generate Plan →</button>
+        <button class="btn gray" id="stClear">Clear</button>
+      </div>
+      <div class="msg" id="stMsg"></div>
+      <div class="out" id="stOut"></div>
+    </div>
+    <div class="card">
+      <h3>2 · Shot Board <span class="tag">AI images</span></h3>
+      <p class="muted" style="margin-bottom:10px">Generates one image per storyboard beat using free Pollinations AI (Flux).</p>
+      <div class="row">
+        <button class="btn green" id="stBoard">🎞 Generate Shot Board</button>
+        <button class="btn gray sm" id="stBoardStop" style="display:none">Stop</button>
+      </div>
+      <div class="progress" id="stProgWrap" style="display:none"><div id="stProg"></div></div>
+      <div class="item-grid" id="stBoardGrid"></div>
+      <div class="msg" id="stBoardMsg"></div>
+    </div>
+  </div>
+  <div class="divider"></div>
+  <div class="grid g2">
+    <div class="card">
+      <h3>3 · Script & Voiceover <span class="tag">free TTS</span></h3>
+      <label>Voiceover script (auto-filled, editable)</label>
+      <textarea id="stScript" rows="5"></textarea>
+      <div class="row">
+        <button class="btn" id="stVo">🗣 Generate Voiceover</button>
+        <select id="stVoTl" style="flex:0 0 auto;width:auto">
+          <option value="en">English</option><option value="hi">Hindi</option><option value="ta">Tamil</option>
+          <option value="te">Telugu</option><option value="bn">Bengali</option><option value="mr">Marathi</option>
+          <option value="gu">Gujarati</option><option value="kn">Kannada</option><option value="ml">Malayalam</option>
+          <option value="es">Spanish</option><option value="fr">French</option><option value="de">German</option><option value="ja">Japanese</option>
+        </select>
+      </div>
+      <div style="margin-top:10px" id="stAudioWrap"></div>
+      <p class="hint">Voiceover mixes automatically with your shot board when exported.</p>
+    </div>
+    <div class="card">
+      <h3>4 · Publish Pack <span class="tag">copy-paste ready</span></h3>
+      <div class="row">
+        <button class="btn" id="stPub">📦 Build Publish Pack</button>
+      </div>
+      <div class="out" id="stPubOut"></div>
+      <div class="row" style="margin-top:10px">
+        <button class="btn gray sm" id="stCopy">📋 Copy All</button>
+        <button class="btn gray sm" id="stExport">💾 Export Project (.txt)</button>
+        <button class="btn gray sm" id="stGist">🐙 Save to GitHub Gist</button>
+      </div>
+      <div class="msg" id="stGistMsg"></div>
+    </div>
+  </div>
+  <div class="divider"></div>
+  <div class="card">
+    <h3>5 · Export Video <span class="tag">real MP4/WebM — runs in your browser</span></h3>
+    <p class="muted" style="margin-bottom:10px">Renders your shot board into an actual video file (Ken Burns motion + optional voiceover audio + optional subtitles). No upload, no server render — WebCodecs does it locally.</p>
+    <div class="row">
+      <div><label>Quality</label><select id="vxQ"><option value="720">720p</option><option value="1080" selected>1080p</option></select></div>
+      <div><label>FPS</label><select id="vxFps"><option value="24">24</option><option value="30" selected>30</option></select></div>
+      <div><label>Per-scene (s)</label><input type="number" id="vxDur" value="4" min="1" max="20" style="max-width:90px"></div>
+      <div><label>Format</label><select id="vxFmt"><option value="webm" selected>WebM (VP9)</option><option value="mp4">MP4 (H.264)</option></select></div>
+      <div style="display:flex;align-items:flex-end;gap:10px">
+        <label style="display:flex;align-items:center;gap:5px;margin:0"><input type="checkbox" id="vxAudio" checked> Voiceover</label>
+        <label style="display:flex;align-items:center;gap:5px;margin:0"><input type="checkbox" id="vxSubs" checked> Subtitles</label>
+      </div>
+    </div>
+    <div style="margin-top:12px" class="row">
+      <button class="btn green" id="vxGo">🎬 Render Video</button>
+      <button class="btn gray sm" id="vxStop" style="display:none">⏹ Stop</button>
+    </div>
+    <div class="progress" id="vxProgWrap" style="display:none"><div id="vxProg"></div></div>
+    <div class="msg" id="vxMsg"></div>
+    <div id="vxOut"></div>
+  </div>
+</section>
+
+<!-- ============ WORKBENCH ============ -->
+<section class="tab" id="tab-workbench">
+  <h2 class="sec">🧠 AI Workbench <span id="wbCount">42 deterministic engines — instant, free, no API key</span></h2>
+  <div class="toolbar">
+    <input type="text" id="wbSearch" placeholder="🔎 filter engines (e.g. hook, publish, audio)…">
+    <button class="btn gray sm" id="wbClear">Clear outputs</button>
+  </div>
+  <div class="engine-grid" id="wbGrid"></div>
+</section>
+
+<!-- ============ IMAGE STUDIO ============ -->
+<section class="tab" id="tab-image">
+  <h2 class="sec">🎨 Image Studio <span>free AI image generation — Pollinations Flux (no key)</span></h2>
+  <div class="card">
+    <label>Prompt</label>
+    <textarea id="imPrompt" rows="3">cinematic establishing shot of a futuristic city at night, neon lights, flying cars, volumetric fog, dramatic lighting, ultra detailed</textarea>
+    <label style="margin-top:8px">Style presets <span class="muted">(appends to your prompt)</span></label>
+    <div class="chips" id="imStyles">
+      <button class="pill on" data-s="">🎬 None</button>
+      <button class="pill" data-s="cinematic, film still, anamorphic lens, dramatic lighting, ultra detailed">🎥 Cinematic</button>
+      <button class="pill" data-s="anime style, studio ghibli inspired, vibrant colors, detailed illustration">🌸 Anime</button>
+      <button class="pill" data-s="3d render, octane render, subsurface scattering, depth of field">🧊 3D</button>
+      <button class="pill" data-s="cyberpunk, neon lights, rain, reflections, futuristic">🌃 Cyberpunk</button>
+      <button class="pill" data-s="watercolor painting, soft edges, paper texture">🎨 Watercolor</button>
+      <button class="pill" data-s="photorealistic, 8k, sharp focus, natural light, award winning photography">📷 Realistic</button>
+      <button class="pill" data-s="isometric view, clean vector style, pastel colors, minimal">📐 Isometric</button>
+      <button class="pill" data-s="vintage film grain, 1970s, retro color grading, analog">📼 Retro</button>
+      <button class="pill" data-s="low poly, geometric, stylized, game asset">🔺 Low-poly</button>
+    </div>
+    <div class="row" style="margin-top:10px">
+      <div><label>Width</label><select id="imW"><option value="1280">1280 · landscape</option><option value="1024" selected>1024 · square</option><option value="832">832 · portrait</option></select></div>
+      <div><label>Height</label><select id="imH"><option value="720">720 · landscape</option><option value="1024" selected>1024 · square</option><option value="1216">1216 · portrait</option></select></div>
+      <div><label>Model</label><select id="imModel"><option value="flux" selected>Flux</option><option value="turbo">Turbo (fast)</option></select></div>
+      <div><label>Seed</label><input type="text" id="imSeed" placeholder="random" style="max-width:110px"></div>
+    </div>
+    <div style="margin-top:12px" class="row">
+      <button class="btn" id="imGen">✨ Generate Image</button>
+      <button class="btn green" id="imGen4">🖼 Generate 4 Variations</button>
+      <button class="btn gray sm" id="imSave">💾 Save All (download)</button>
+    </div>
+    <div class="msg" id="imMsg"></div>
+    <div class="item-grid" id="imGrid"></div>
+  </div>
+</section>
+
+<!-- ============ STOCK LIBRARY ============ -->
+<section class="tab" id="tab-stock">
+  <h2 class="sec">📚 Stock Library <span>4 free sources — Wikimedia Commons · Openverse CC · Internet Archive · AI</span></h2>
+  <div class="card">
+    <div class="row">
+      <input type="text" id="skQ" placeholder="Search stock media… e.g. mountain sunset, city timelapse" value="city night">
+      <select id="skSrc" style="flex:0 0 auto;width:auto">
+        <option value="commons">Wikimedia Commons</option>
+        <option value="openverse">Openverse (CC images)</option>
+        <option value="archive">Internet Archive</option>
+      </select>
+      <select id="skType" style="flex:0 0 auto;width:auto"><option value="image">Images</option><option value="video">Videos</option></select>
+      <button class="btn" id="skGo">🔎 Search</button>
+    </div>
+    <div class="msg" id="skMsg"></div>
+    <div class="item-grid" id="skGrid"></div>
+    <p class="hint">Wikimedia Commons & Openverse: click any result to load it into the Image Studio / shot board. Internet Archive: opens the item page for download. All media is CC-licensed — check the source page for attribution.</p>
+  </div>
+</section>
+
+<!-- ============ AI COPILOT ============ -->
+<section class="tab" id="tab-copilot">
+  <h2 class="sec">⚡ AI Copilot <span>real free LLM — Ollama local (llama3.2) → HuggingFace → built-in rules</span></h2>
+  <div class="grid g2">
+    <div class="card">
+      <h3>Copilot Chat <span class="tag" id="cpEngineTag">engine: connecting…</span></h3>
+      <div class="chat" id="cpChat"></div>
+      <div class="chatbar">
+        <input type="text" id="cpIn" placeholder="Ask anything about your video… (e.g. write a 30s script)">
+        <button class="btn" id="cpSend">Send</button>
+      </div>
+      <label style="margin-top:12px">Engine</label>
+      <select id="cpModel">
+        <option value="auto">Auto (llama3.2 → any local model → rules)</option>
+        <option value="ollama">Ollama default</option>
+        <option value="rules">Rules only (instant, offline)</option>
+      </select>
+      <div class="row" style="margin-top:10px">
+        <button class="btn gray sm" id="cpCtx">📤 Use Studio Context</button>
+        <button class="btn gray sm" id="cpClear">🧹 Clear chat</button>
+        <button class="btn gray sm" id="cpCopy">📋 Copy last answer</button>
+      </div>
+      <p class="hint">Runs on your own machine via Ollama (llama3.2 — free, offline, no account). Falls back to HuggingFace's free inference API, then to built-in rules so it never hangs.</p>
+      <div class="msg" id="cpMsg"></div>
+    </div>
+    <div class="card">
+      <h3>⚡ Prompt Presets</h3>
+      <div class="chips" id="cpPresets"></div>
+      <div class="divider" style="margin:14px 0"></div>
+      <h3>✨ Quick Actions</h3>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
+        <button class="btn gray sm" data-cpa="Rewrite this as a punchy 3-line description:">📝 Describe a video</button>
+        <button class="btn gray sm" data-cpa="Write 5 attention-grabbing YouTube titles for:">🏷 Titles</button>
+        <button class="btn gray sm" data-cpa="Write a 30-second voiceover script with hook, 3 beats and CTA about:">🎙 Script</button>
+        <button class="btn gray sm" data-cpa="Suggest 8 b-roll shots for:">🎥 B-Roll</button>
+        <button class="btn gray sm" data-cpa="Give 10 hashtags + a full description block for a video about:">#️⃣ Publish pack</button>
+        <button class="btn gray sm" data-cpa="Explain this error and fix it:">🐛 Debug code</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ON-DEVICE AI ============ -->
+<section class="tab" id="tab-device">
+  <h2 class="sec">📡 On-Device AI Lab <span>real neural models running 100% in your browser via Transformers.js</span></h2>
+  <div class="stat-cards">
+    <div class="stat"><div class="n" id="dvLoaded">0</div><div class="l">models loaded</div></div>
+    <div class="stat"><div class="n" id="dvInf">0</div><div class="l">inferences run</div></div>
+    <div class="stat"><div class="n" style="font-size:16px" id="dvStatus">idle</div><div class="l">status</div></div>
+  </div>
+  <div class="card">
+    <h3>Model Runtime</h3>
+    <div class="progress" id="dvProgWrap" style="display:none"><div id="dvProg"></div></div>
+    <p class="muted" id="dvRunTxt" style="margin-top:8px">Models download once (~2–60 MB) from Hugging Face and then run offline forever. First load is the slowest.</p>
+    <div id="dvModels"></div>
+  </div>
+</section>
+
+<!-- ============ GITHUB HUB ============ -->
+<section class="tab" id="tab-github">
+  <h2 class="sec">🐙 GitHub Hub <span>search code, browse repos, save your projects as gists</span></h2>
+  <div class="grid g2">
+    <div class="card">
+      <h3>🐙 Repo → Video Skills <span class="tag">turn any repo into content</span></h3>
+      <p class="muted" style="margin-bottom:8px">Paste any <code>owner/repo</code> — get a full video idea pack: angles, script beats, stats and topics. Perfect for tech explainers.</p>
+      <div class="row">
+        <input type="text" id="ghVidRepo" placeholder="owner/repo" value="huggingface/transformers.js">
+        <button class="btn" id="ghVidGo">🎬 Make Video Pack</button>
+      </div>
+      <div class="msg" id="ghVidMsg"></div>
+      <div class="out" id="ghVidOut" style="max-height:420px"></div>
+    </div>
+    <div class="card">
+      <h3>Search <span class="tag">no key needed</span></h3>
+      <div class="row">
+        <input type="text" id="ghQ" placeholder="e.g. video-generator, transformers.js" value="ai video generator">
+        <select id="ghType" style="flex:0 0 auto;width:auto"><option value="repositories">Repos</option><option value="code">Code</option></select>
+        <button class="btn" id="ghGo">🔎 Search</button>
+      </div>
+      <div class="msg" id="ghMsg"></div>
+      <div class="out" id="ghOut" style="max-height:420px"></div>
+    </div>
+    <div class="card">
+      <h3>Repo Browser <span class="tag">file tree + viewer</span></h3>
+      <div class="row">
+        <input type="text" id="ghRepo" placeholder="owner/repo" value="kalubhalu141-bit/">
+        <input type="text" id="ghRef" placeholder="branch (HEAD)" value="main" style="max-width:110px">
+        <button class="btn" id="ghTree">📂 Tree</button>
+      </div>
+      <div class="out" id="ghTreeOut" style="max-height:260px"></div>
+      <label>File content</label>
+      <div class="out" id="ghFileOut" style="max-height:300px;font-family:Consolas,monospace;font-size:12px"></div>
+    </div>
+    <div class="card">
+      <h3>Trending Repos <span class="tag">fresh daily</span></h3>
+      <div class="row">
+        <input type="text" id="ghTrendLang" placeholder="language (optional)" style="max-width:140px">
+        <button class="btn" id="ghTrend">🔥 Trending</button>
+      </div>
+      <div class="out" id="ghTrendOut" style="max-height:300px"></div>
+    </div>
+    <div class="card">
+      <h3>Save Project as Gist <span class="tag">needs token</span></h3>
+      <label>Filename</label>
+      <input type="text" id="ghGistName" value="video-project.md">
+      <label>Description</label>
+      <input type="text" id="ghGistDesc" value="∞ Video Generator project export">
+      <label>Content (auto-filled from your studio — edit freely)</label>
+      <textarea id="ghGistBody" rows="6"></textarea>
+      <div class="row" style="margin-top:10px">
+        <button class="btn green" id="ghGist">🚀 Create Gist</button>
+        <button class="btn gray sm" id="ghGistFill">⇅ Fill from Studio</button>
+      </div>
+      <div class="msg" id="ghGistMsg"></div>
+    </div>
+    <div class="card">
+      <h3>GitHub Token</h3>
+      <p class="muted" style="margin-bottom:8px">Used for Gist creation (saving your projects to GitHub). Stored in your browser only. A classic PAT with <code>gist</code> scope works. The AI Copilot runs on Ollama/HuggingFace — it needs no token.</p>
+      <input type="password" id="ghToken" placeholder="ghp_… / github_pat_…">
+      <div style="margin-top:10px" class="row">
+        <button class="btn gray sm" id="ghTokenSave">Save Token</button>
+        <button class="btn gray sm" id="ghTokenClear">Clear</button>
+      </div>
+      <div class="msg" id="ghTokenMsg"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TRENDS ============ -->
+<section class="tab" id="tab-trends">
+  <h2 class="sec">🔥 Live Trends <span>Hacker News · Wikipedia · Reddit · GitHub — perfect video topics</span></h2>
+  <div class="row" style="margin-bottom:10px">
+    <select id="trSrc" style="flex:0 0 auto;width:auto">
+      <option value="news">Hacker News + Wikipedia</option>
+      <option value="reddit">Reddit top posts</option>
+      <option value="github">GitHub trending repos</option>
+    </select>
+    <input type="text" id="trArg" placeholder="subreddit or language (optional)" style="max-width:180px">
+    <button class="btn" id="trGo">🔥 Load Trending</button>
+    <button class="btn green sm" id="trIdeas">💡 Turn into Video Ideas</button>
+  </div>
+  <div class="msg" id="trMsg"></div>
+  <div class="out" id="trOut"></div>
+</section>
+
+<!-- ============ TRANSLATE ============ -->
+<section class="tab" id="tab-lang">
+  <h2 class="sec">🌐 Translator <span>free keyless translation — 100+ languages</span></h2>
+  <div class="card">
+    <div class="grid g2">
+      <div>
+        <label>Text to translate</label>
+        <textarea id="trIn" rows="6" placeholder="Type or paste your script, title, or description…">This video shows you how to create stunning AI videos for free.</textarea>
+      </div>
+      <div>
+        <label>Target language</label>
+        <select id="trTl">
+          <option value="hi">Hindi</option><option value="ta">Tamil</option><option value="te">Telugu</option>
+          <option value="bn">Bengali</option><option value="mr">Marathi</option><option value="gu">Gujarati</option>
+          <option value="kn">Kannada</option><option value="ml">Malayalam</option><option value="pa">Punjabi</option>
+          <option value="ur">Urdu</option><option value="es">Spanish</option><option value="fr">French</option>
+          <option value="de">German</option><option value="pt">Portuguese</option><option value="ru">Russian</option>
+          <option value="zh-CN">Chinese</option><option value="ja">Japanese</option><option value="ko">Korean</option>
+          <option value="ar">Arabic</option><option value="it">Italian</option>
+        </select>
+        <div style="margin-top:12px" class="row">
+          <button class="btn" id="trGoBtn">🌐 Translate</button>
+          <button class="btn gray sm" id="trCopy">📋 Copy</button>
+        </div>
+      </div>
+    </div>
+    <div class="out" id="trOut2"></div>
+  </div>
+</section>
+
+<!-- ============ TTS ============ -->
+<section class="tab" id="tab-tts">
+  <h2 class="sec">🗣 TTS Voiceover Studio <span>free neural-quality text-to-speech, MP3 download</span></h2>
+  <div class="card">
+    <label>Text to speak</label>
+    <textarea id="ttsText" rows="6">Welcome to Infinity Video Generator. Create stunning videos with free AI — no keys, no watermark, no limits. Hit generate and let the magic begin!</textarea>
+    <div class="row" style="margin-top:10px">
+      <div><label>Language</label><select id="ttsTl">
+        <option value="en">English</option><option value="hi">Hindi</option><option value="ta">Tamil</option>
+        <option value="te">Telugu</option><option value="bn">Bengali</option><option value="mr">Marathi</option>
+        <option value="gu">Gujarati</option><option value="kn">Kannada</option><option value="ml">Malayalam</option>
+        <option value="es">Spanish</option><option value="fr">French</option><option value="de">German</option><option value="ja">Japanese</option>
+        <option value="ko">Korean</option><option value="zh-CN">Chinese</option>
+      </select></div>
+      <div><label>Voice pick</label><select id="ttsMood">
+        <option value="epic">Epic / dramatic</option><option value="calm">Calm / soft</option>
+        <option value="neon">Energetic</option><option value="warm">Friendly</option><option value="dark">Deep / tense</option>
+      </select></div>
+    </div>
+    <div style="margin-top:12px" class="row">
+      <button class="btn" id="ttsGo">🎙 Generate Speech</button>
+      <button class="btn green" id="ttsDown" style="display:none">💾 Download MP3</button>
+    </div>
+    <div class="msg" id="ttsMsg"></div>
+    <div id="ttsAudio" style="margin-top:10px"></div>
+    <p class="hint">Long text is auto-chunked. ~180 characters per request keeps Google's free endpoint happy.</p>
+  </div>
+</section>
+
+<!-- ============ THUMBNAIL FORGE ============ -->
+<section class="tab" id="tab-forge">
+  <h2 class="sec">⚒️ Thumbnail Forge <span>AI-generated 1280×720 thumbnails in 3 proven compositions + A/B test plans</span></h2>
+  <div class="grid g2">
+    <div class="card">
+      <h3>Generate Thumbnail Set</h3>
+      <label>Video topic</label>
+      <input type="text" id="tfTopic" placeholder="e.g. how I built a tiny house for $12k">
+      <div class="row" style="margin-top:10px">
+        <button class="btn green" id="tfGo">⚒️ Forge 3 Thumbnails</button>
+        <button class="btn gray sm" id="tfMore">🎲 Reroll</button>
+      </div>
+      <div class="msg" id="tfMsg"></div>
+      <div class="item-grid" id="tfGrid"></div>
+    </div>
+    <div class="card">
+      <h3>🧪 A/B Test Designer</h3>
+      <label>Title to test</label>
+      <input type="text" id="tfAbTitle" placeholder="your video title…">
+      <div class="row" style="margin-top:10px">
+        <button class="btn" id="tfAbGo">Design A/B Test</button>
+      </div>
+      <div class="out engine-res" id="tfAbOut"></div>
+    </div>
+    <div class="card">
+      <h3>🎵 Free Music Finder <span class="tag">Internet Archive · keyless</span></h3>
+      <div class="row">
+        <input type="text" id="tfMusicQ" placeholder="genre / mood…" value="cinematic instrumental">
+        <button class="btn" id="tfMusicGo">🔎 Find Tracks</button>
+      </div>
+      <div class="msg" id="tfMusicMsg"></div>
+      <div class="out" id="tfMusicOut"></div>
+    </div>
+    <div class="card">
+      <h3>🔀 Format Remixer</h3>
+      <label>Your video idea — get it in 6 viral formats</label>
+      <input type="text" id="tfRemixQ" placeholder="video idea…">
+      <div class="row" style="margin-top:10px">
+        <button class="btn" id="tfRemixGo">Remix Formats</button>
+      </div>
+      <div class="out engine-res" id="tfRemixOut"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3D VIDEO (WebGPU T2V-Zero + PANDORA-style storyboard) ============ -->
+<section class="tab" id="tab-dvideo">
+  <h2 class="sec">🎥 3D Video Studio <span>prompt → WebGPU in-browser 3D scene → real MP4 export · clean-room merger of open-source patterns</span></h2>
+
+  <div class="grid g2">
+    <div class="card">
+      <h3>1 · Prompt & 3D Scene <span class="tag">Three.js / WebGL</span></h3>
+      <label>Describe the 3D video</label>
+      <textarea id="dvPrompt" rows="3">a glowing crystalline sphere orbiting slowly above a calm dark ocean, volumetric god rays, cinematic orbit, teal & orange grade</textarea>
+      <div class="row" style="margin-top:10px">
+        <div>
+          <label>Engine</label>
+          <select id="dvEngine">
+            <option value="galaxy">🌌 Galaxy (particles + bloom)</option>
+            <option value="planet">🪐 Planet orbit (textured sphere + rings)</option>
+            <option value="city">🌃 Neon city (low-poly grid + fog)</option>
+            <option value="fire">🔥 Fire burst (additive particles)</option>
+            <option value="waves">🌊 Ocean waves (displacement + sun)</option>
+            <option value="tunnel">🌀 Warp tunnel (streaks + chroma)</option>
+            <option value="title">🪧 Kinetic title (2D text + particles)</option>
+            <option value="logo">✨ Logo reveal (PBR glass + bloom)</option>
+            <option value="webgpu">⚡ WebGPU T2V-Zero (in-browser diffusion, requires WebGPU)</option>
+          </select>
+        </div>
+        <div>
+          <label>Lens (mm → FOV)</label>
+          <select id="dvLens"><option>8</option><option>14</option><option selected>35</option><option>50</option><option>75</option></select>
+        </div>
+        <div>
+          <label>Camera move</label>
+          <select id="dvCam"><option value="orbit">Orbit</option><option value="crane">Crane</option><option value="reveal">Reveal (push-in)</option><option value="pushorbit">Push + orbit</option><option value="static">Static</option></select>
+        </div>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <div><label>Resolution</label><select id="dvRes"><option value="1280x720">720p</option><option value="1920x1080" selected>1080p</option><option value="1080x1920">Vertical 9:16</option><option value="1080x1080">Square 1:1</option></select></div>
+        <div><label>FPS</label><select id="dvFps"><option>24</option><option selected>30</option><option>60</option></select></div>
+        <div><label>Duration (s)</label><input type="number" id="dvDur" value="6" min="2" max="30"></div>
+        <div><label>Film LUT</label><select id="dvLut"><option value="none">None</option><option value="teal">Teal & Orange</option><option value="warm">Warm</option><option value="cool">Cool</option><option value="noir">Noir</option><option value="vintage">Vintage</option><option value="bleach">Bleach Bypass</option></select></div>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <label style="display:flex;align-items:center;gap:5px;margin:0"><input type="checkbox" id="dvLetterbox" checked> Letterbox 2.35:1</label>
+        <label style="display:flex;align-items:center;gap:5px;margin:0"><input type="checkbox" id="dvGrain" checked> Film grain</label>
+        <label style="display:flex;align-items:center;gap:5px;margin:0"><input type="checkbox" id="dvBloom" checked> Bloom</label>
+      </div>
+      <div style="margin-top:12px" class="row">
+        <button class="btn primary" id="dvDirector">🧠 Director (parse prompt → scene)</button>
+        <button class="btn green" id="dvRender">▶ Render 3D Video</button>
+        <button class="btn gray sm" id="dvStop" style="display:none">⏹ Stop</button>
+      </div>
+      <div class="msg" id="dvMsg"></div>
+    </div>
+    <div class="card">
+      <h3>2 · Preview <span class="tag" id="dvBadge">ready</span></h3>
+      <div class="stagewrap" style="position:relative;background:#000;border:1px solid var(--line);border-radius:10px;overflow:hidden;aspect-ratio:16/9">
+        <canvas id="dvGl" style="width:100%;height:100%;display:block"></canvas>
+        <canvas id="dvCv" style="width:100%;height:100%;display:none"></canvas>
+      </div>
+      <div class="hint">3D engine renders to the WebGL canvas, then a composite canvas applies bloom / LUT / grain / letterbox. Recording uses MediaRecorder on the composite.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="card">
+    <h3>3 · Director's Notes <span class="tag">prompt → scene + camera + grade + sound</span></h3>
+    <div id="dvNotes" class="out" style="min-height:80px"></div>
+    <div class="hint">Director auto-fills engine / lens / cam / LUT / duration from your prompt. You can override any field — the override sticks for the next render.</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="card">
+    <h3>4 · Export <span class="tag">real MP4 / WebM</span></h3>
+    <p class="muted" style="margin-bottom:8px">Renders the 3D scene above into a downloadable file. The composite stack (bloom → LUT → grain → letterbox) is baked into every frame of the output.</p>
+    <div class="progress" id="dvProgWrap" style="display:none"><div id="dvProg"></div></div>
+    <div id="dvOut"></div>
+  </div>
+</section>
+
+<!-- ============ CINEMA PRE-PRODUCTION (PANDORA-inspired) ============ -->
+<section class="tab" id="tab-cinema">
+  <h2 class="sec">🎬 Cinema Studio <span>screenplay → storyboard → shot list → per-shot generation · inspired by PANDORA's pre-prod flow (clean-room implementation)</span></h2>
+
+  <div class="grid g2">
+    <div class="card">
+      <h3>1 · Screenplay <span class="tag">free Ollama LLM director (or rules)</span></h3>
+      <label>Logline / brief</label>
+      <textarea id="cnLog" rows="3">a lone astronaut discovers a hidden garden inside an asteroid, soft golden light, hope</textarea>
+      <label style="margin-top:8px">Director style</label>
+      <select id="cnStyle">
+        <option value="kubrick">Kubrick — symmetric, slow, eerie</option>
+        <option value="nolan">Nolan — IMAX, time-bending, dense</option>
+        <option value="vintage" selected>Vintage 1970s — grain, warm, handheld</option>
+        <option value="anime">Anime — bold, colorful, expressive</option>
+        <option value="nature">Nature doc — soft, observational, intimate</option>
+        <option value="cyberpunk">Cyberpunk — neon, rain, kinetic</option>
+      </select>
+      <div class="row" style="margin-top:12px">
+        <button class="btn" id="cnScreen">📜 Generate Screenplay</button>
+        <button class="btn gray sm" id="cnScreenStop" style="display:none">Stop</button>
+      </div>
+      <div class="msg" id="cnScreenMsg"></div>
+      <div class="out" id="cnScreenOut"></div>
+    </div>
+
+    <div class="card">
+      <h3>2 · Storyboard <span class="tag">scene breakdown</span></h3>
+      <p class="muted" style="margin-bottom:8px">Auto-break screenplay into scenes. Each scene becomes a separate shot.</p>
+      <div class="row">
+        <button class="btn green" id="cnBoard">🎞 Build Storyboard</button>
+        <button class="btn gray sm" id="cnBoardClear">Clear</button>
+      </div>
+      <div class="progress" id="cnProgWrap" style="display:none"><div id="cnProg"></div></div>
+      <div class="msg" id="cnBoardMsg"></div>
+      <div id="cnBoardOut" class="out" style="max-height:300px"></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="card">
+    <h3>3 · Shot List & Per-Shot Generation <span class="tag">one image per shot · Pollinations FLUX (keyless)</span></h3>
+    <p class="muted" style="margin-bottom:10px">Every scene from the storyboard becomes a generated keyframe image with its own style suffix. The 3D Video tab can re-render any shot as a moving scene with the same prompt.</p>
+    <div class="row">
+      <button class="btn" id="cnShots">🎬 Generate All Shots</button>
+      <button class="btn gray sm" id="cnShotsStop" style="display:none">Stop</button>
+    </div>
+    <div class="progress" id="cnShotsProgWrap" style="display:none"><div id="cnShotsProg"></div></div>
+    <div class="msg" id="cnShotsMsg"></div>
+    <div class="item-grid" id="cnShotsGrid"></div>
+  </div>
+</section>
+
+<!-- ============ TOPIC RESEARCH ============ -->
+<section class="tab" id="tab-research">
+  <h2 class="sec">🔬 Topic Research <span>real Wikipedia facts + live news → video angles, all keyless</span></h2>
+  <div class="grid g2">
+    <div class="card">
+      <h3>📚 Wikipedia Deep Dive <span class="tag">real sourced facts</span></h3>
+      <div class="row">
+        <input type="text" id="rsWikiQ" placeholder="topic… e.g. Mariana Trench">
+        <button class="btn" id="rsWikiGo">🔬 Research</button>
+      </div>
+      <div class="msg" id="rsWikiMsg"></div>
+      <div class="out" id="rsWikiOut"></div>
+    </div>
+    <div class="card">
+      <h3>📰 Live News Angles <span class="tag">Google News RSS</span></h3>
+      <div class="row">
+        <input type="text" id="rsNewsQ" placeholder="niche… e.g. AI video tools">
+        <button class="btn" id="rsNewsGo">📰 Load Headlines</button>
+      </div>
+      <div class="msg" id="rsNewsMsg"></div>
+      <div class="out" id="rsNewsOut"></div>
+    </div>
+    <div class="card">
+      <h3>💡 Idea Mashup Machine</h3>
+      <div class="row">
+        <input type="text" id="rsIdeasQ" placeholder="base topic… e.g. street food" value="AI video">
+        <button class="btn green" id="rsIdeasGo">💡 Generate Ideas</button>
+        <button class="btn gray sm" id="rsIdeasMore">∞ More</button>
+      </div>
+      <div class="msg" id="rsIdeasMsg"></div>
+      <div class="out" id="rsIdeasOut"></div>
+    </div>
+    <div class="card">
+      <h3>🎬 One-Click Full Script</h3>
+      <p class="muted">Assembles scenes + camera + narration + palette from your idea in one call.</p>
+      <div class="row">
+        <input type="text" id="rsFullIdea" placeholder="video idea…">
+        <select id="rsFullDur" style="flex:0 0 auto;width:auto"><option>30</option><option>60</option><option>90</option></select>
+        <button class="btn" id="rsFullGo">Assemble Script</button>
+      </div>
+      <div class="msg" id="rsFullMsg"></div>
+      <div class="out" id="rsFullOut" style="max-height:420px"></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- 3D Video Studio: Three.js for in-browser WebGL scenes (CDN) -->
+<script src="https://unpkg.com/three@0.150.1/build/three.min.js" crossorigin="anonymous"></script>
+<script>
+'use strict';
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const msg = (el, txt, kind) => { const m = $(el); m.textContent = txt; m.className = 'msg show ' + (kind || 'info'); };
+const hideMsg = el => { const m = $(el); m.className = 'msg'; };
+const api = async (url, opts) => {
+  const r = await fetch(url, opts);
+  const ct = r.headers.get('content-type') || '';
+  if (ct.includes('json')) return r.json();
+  const b = await r.arrayBuffer();
+  return { _bytes: b, _type: ct.split(';')[0], _ok: r.ok };
+};
+const download = (name, data, type) => {
+  const blob = data instanceof Blob ? data : new Blob([data], { type: type || 'application/octet-stream' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+};
+
+/* ---------- tabs ---------- */
+const NAV = ['studio','workbench','image','stock','copilot','device','github','trends','lang','tts','forge','research'];
+$('#nav').addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  NAV.forEach(t => { $('#tab-' + t).classList.toggle('on', t === b.dataset.t); });
+  $$('#nav button').forEach(x => x.classList.toggle('on', x === b));
+});
+
+/* ---------- health ---------- */
+fetch('/api/health').then(r => r.json()).then(j => {
+  $('#healthTxt').textContent = 'online · ' + j.engines + ' engines' + (j.ghModels ? ' · GH token: server' : '');
+}).catch(() => $('#healthTxt').textContent = 'offline — start server.js');
+
+/* ================= STUDIO ================= */
+const stState = { idea: '', platform: 'youtube', dur: 30, beats: [], images: [], script: '', audioUrl: '', pub: '' };
+$('#stIdea').addEventListener('input', e => stState.idea = e.target.value);
+$('#stPlatform').addEventListener('change', e => stState.platform = e.target.value);
+$('#stDur').addEventListener('input', e => stState.dur = parseInt(e.target.value) || 30);
+
+$('#stPlan').addEventListener('click', async () => {
+  hideMsg('#stMsg');
+  const idea = $('#stIdea').value.trim(); if (!idea) { msg('#stMsg', 'Describe your video idea first.', 'err'); return; }
+  stState.idea = idea;
+  const plat = $('#stPlatform').value, dur = parseInt($('#stDur').value) || 30;
+  $('#stOut').textContent = '⏳ planning…';
+  const p = [
+    ['storyboard', { prompt: idea, shots: Math.min(6, Math.max(3, Math.round(dur / 8))) }],
+    ['aspect', { idea, platform: plat }],
+    ['pacing', { duration: dur, scenes: Math.min(6, Math.max(3, Math.round(dur / 8))) }],
+    ['palette', { mood: 'epic' }],
+    ['voice', { mood: 'epic' }],
+    ['music', { mood: 'epic' }],
+    ['script', { prompt: idea, duration: dur }],
+    ['voiceover', { prompt: idea, words: Math.max(40, Math.round(dur * 2.2)) }]
+  ];
+  const results = {};
+  for (const [k, inp] of p) {
+    try { const j = await api('/api/engine/run?key=' + k + '&' + Object.entries(inp).map(([a, b]) => 'in_' + a + '=' + encodeURIComponent(b)).join('&')); results[k] = j.result || {}; } catch (e) { results[k] = { error: e.message }; }
+  }
+  stState.beats = (results.storyboard.beats || []).map(b => b.action);
+  const sh = (results.shotlist && results.shotlist.shots) || [];
+  let o = '🧠 PLAN — "' + idea + '"  (' + plat + ' · ' + dur + 's)\n' + '═'.repeat(46) + '\n\n';
+  o += '📐 ASPECT: ' + (results.aspect.aspect || '16:9') + ' @ ' + (results.aspect.resolution || '') + ' — ' + (results.aspect.note || '') + '\n';
+  o += '⏱ PACING: ' + (results.pacing.perScene || '') + ' per scene × ' + (results.pacing.scenes || 0) + ' scenes\n';
+  o += '🎨 PALETTE: ' + ((results.palette.palette || []).join('  ')) + '\n';
+  o += '🗣 VOICE: ' + (results.voice.voice || '') + ' (' + (results.voice.style || '') + ')  ·  🎵 ' + (results.music.genre || '') + ' @ ' + (results.music.tempo || '') + ' BPM\n\n';
+  o += '🎞 STORYBOARD BEATS:\n' + (stState.beats.map((b, i) => '  ' + (i + 1) + '. ' + b).join('\n')) + '\n\n';
+  o += '📜 SCRIPT OUTLINE:\n' + ((results.script.beats || []).map(b => '  [' + b.time + '] ' + b.kind + ' — ' + b.line).join('\n')) + '\n\n';
+  o += '🎙 VOICEOVER DRAFT:\n  ' + (results.voiceover.script || '') + '\n';
+  $('#stOut').textContent = o;
+  stState.script = (results.voiceover.script || '');
+  $('#stScript').value = stState.script;
+  msg('#stMsg', 'Plan ready. Generate your shot board next →', 'ok');
+});
+
+$('#stClear').addEventListener('click', () => {
+  stState.beats = []; stState.images = []; stState.script = ''; stState.audioUrl = ''; stState.pub = '';
+  $('#stOut').textContent = ''; $('#stScript').value = ''; $('#stBoardGrid').innerHTML = ''; $('#stAudioWrap').innerHTML = '';
+  $('#stPubOut').textContent = ''; $('#stIdea').value = '';
+});
+
+$('#stBoard').addEventListener('click', async () => {
+  const idea = $('#stIdea').value.trim();
+  if (!stState.beats.length) {
+    msg('#stBoardMsg', 'Generate a plan first (or type beats below). Using idea as single prompt.', 'info');
+    stState.beats = [idea];
+  }
+  $('#stBoardStop').style.display = 'inline-block';
+  $('#stProgWrap').style.display = 'block';
+  hideMsg('#stBoardMsg');
+  stState.images = [];
+  $('#stBoardGrid').innerHTML = '';
+  const beats = stState.beats;
+  let done = 0;
+  for (let i = 0; i < beats.length; i++) {
+    const prompt = beats[i] + ', cinematic ' + (i === 0 ? 'establishing shot' : i === beats.length - 1 ? 'concluding shot' : 'detail shot') + ', film still, high detail';
+    const cell = document.createElement('div');
+    cell.className = 'item';
+    cell.innerHTML = '<div style="height:110px;display:flex;align-items:center;justify-content:center;color:var(--mut);font-size:11px">generating…</div><div class="meta">Beat ' + (i + 1) + ' · loading</div>';
+    $('#stBoardGrid').appendChild(cell);
+    try {
+      const r = await api('/api/aigen?prompt=' + encodeURIComponent(prompt) + '&w=640&h=360&model=flux&seed=' + Math.floor(Math.random() * 99999));
+      if (r._bytes && r._bytes.byteLength > 500) {
+        const url = URL.createObjectURL(new Blob([r._bytes], { type: 'image/jpeg' }));
+        stState.images.push({ beat: i + 1, prompt, url, bytes: r._bytes });
+        cell.innerHTML = '<img src="' + url + '" alt="beat ' + (i + 1) + '"><div class="meta"><b>Beat ' + (i + 1) + '</b> · ' + esc(beats[i].slice(0, 40)) + '</div>';
+      } else { cell.innerHTML = '<div style="height:110px;display:flex;align-items:center;justify-content:center;color:var(--acc3);font-size:11px">failed</div><div class="meta">Beat ' + (i + 1) + ' · throttled</div>'; }
+    } catch (e) { cell.innerHTML = '<div style="height:110px;display:flex;align-items:center;justify-content:center;color:var(--acc3);font-size:11px">error</div><div class="meta">' + esc(e.message) + '</div>'; }
+    done++;
+    $('#stProg').style.width = Math.round(done / beats.length * 100) + '%';
+  }
+  $('#stProgWrap').style.display = 'none';
+  $('#stBoardStop').style.display = 'none';
+  msg('#stBoardMsg', 'Shot board ready — ' + stState.images.length + '/' + beats.length + ' images generated.', stState.images.length ? 'ok' : 'err');
+});
+$('#stBoardStop').addEventListener('click', () => { location.reload(); });
+
+$('#stVo').addEventListener('click', async () => {
+  hideMsg('#stMsg');
+  const text = $('#stScript').value.trim(); if (!text) { msg('#stMsg', 'Script is empty — generate a plan first.', 'err'); return; }
+  $('#stAudioWrap').innerHTML = '<span class="loader"></span> synthesizing voice…';
+  try {
+    const r = await api('/api/tts?tl=' + $('#stVoTl').value + '&q=' + encodeURIComponent(text));
+    if (!r._bytes || r._bytes.byteLength < 200) { $('#stAudioWrap').innerHTML = ''; msg('#stMsg', 'TTS failed (throttled?) — try again in a moment.', 'err'); return; }
+    stState.audioUrl = URL.createObjectURL(new Blob([r._bytes], { type: 'audio/mpeg' }));
+    $('#stAudioWrap').innerHTML = '<audio controls style="width:100%" src="' + stState.audioUrl + '"></audio><div style="margin-top:8px"><button class="btn gray sm" id="stAudioDown">💾 Download MP3</button></div>';
+    $('#stAudioDown').addEventListener('click', () => download('voiceover.mp3', new Blob([r._bytes], { type: 'audio/mpeg' }), 'audio/mpeg'));
+    msg('#stMsg', 'Voiceover ready (' + Math.round(r._bytes.byteLength / 1024) + ' KB).', 'ok');
+  } catch (e) { $('#stAudioWrap').innerHTML = ''; msg('#stMsg', 'TTS error: ' + e.message, 'err'); }
+});
+
+$('#stPub').addEventListener('click', async () => {
+  const idea = $('#stIdea').value.trim(); if (!idea) { msg('#stMsg', 'Describe your video first.', 'err'); return; }
+  const p = [
+    ['titles', { topic: idea, style: 'mix' }],
+    ['description', { prompt: idea, title: '' }],
+    ['tags', { topic: idea }],
+    ['keywords', { topic: idea }],
+    ['chapters', { script: (stState.script || idea).split(/[.!?\n]/).filter(Boolean).slice(0, 6).join('\n') }],
+    ['seo', { title: idea.slice(0, 60) }]
+  ];
+  const res = {};
+  for (const [k, inp] of p) { try { const j = await api('/api/engine/run?key=' + k + '&' + Object.entries(inp).map(([a, b]) => 'in_' + a + '=' + encodeURIComponent(b)).join('&')); res[k] = j.result || {}; } catch (e) {} }
+  let o = '📦 PUBLISH PACK — "' + idea + '"\n' + '═'.repeat(46) + '\n\n';
+  o += '🏷 TITLES:\n' + (res.titles.titles || []).map((t, i) => '  ' + t).join('\n') + '\n\n';
+  o += '📝 DESCRIPTION:\n  ' + (res.description.description || '') + '\n\n';
+  o += '#️⃣ HASHTAGS: ' + ((res.tags.tags || []).join(' ')) + '\n\n';
+  o += '🔑 KEYWORDS:\n' + (res.keywords.keywords || []).map((k, i) => '  ' + k).join('\n') + '\n\n';
+  o += '📑 CHAPTERS:\n' + (res.chapters.chapters || []).map(c => '  ' + c).join('\n') + '\n\n';
+  o += '📈 SEO: ' + (res.seo.score || '') + ' — ' + (res.seo.verdict || '');
+  stState.pub = o;
+  $('#stPubOut').textContent = o;
+  msg('#stMsg', 'Publish pack ready. Copy it or save as a gist.', 'ok');
+});
+
+$('#stCopy').addEventListener('click', async () => {
+  const all = [($('#stOut').textContent || ''), ($('#stPubOut').textContent || '')].filter(Boolean).join('\n\n');
+  if (!all) return;
+  try { await navigator.clipboard.writeText(all); msg('#stMsg', 'Copied to clipboard!', 'ok'); }
+  catch (e) { msg('#stMsg', 'Copy failed — select and copy manually.', 'err'); }
+});
+
+$('#stExport').addEventListener('click', () => {
+  const all = [($('#stOut').textContent || ''), ($('#stPubOut').textContent || '')].filter(Boolean).join('\n\n');
+  download('video-project.txt', all || '∞ Video Generator project\n' + stState.idea, 'text/plain');
+});
+
+$('#stGist').addEventListener('click', () => { $('#ghGistFill').click(); $('#ghGist').click(); });
+
+$('#ghGistFill').addEventListener('click', () => {
+  const all = [($('#stOut').textContent || ''), ($('#stPubOut').textContent || '')].filter(Boolean).join('\n\n');
+  $('#ghGistBody').value = all || $('#stIdea').value;
+});
+
+/* ================= VIDEO EXPORT (WebCodecs + muxer, real MP4/WebM) ================= */
+let vxStop = false;
+$('#vxStop').addEventListener('click', () => { vxStop = true; });
+$('#vxGo').addEventListener('click', async () => {
+  const images = stState.images;
+  if (!images.length) { msg('#vxMsg', 'Generate a shot board first (Studio step 2).', 'err'); return; }
+  const fmt = $('#vxFmt').value, q = $('#vxQ').value;
+  const W = q === '1080' ? 1920 : 1280, H = q === '1080' ? 1080 : 720;
+  const fps = parseInt($('#vxFps').value) || 30, perScene = Math.max(1, parseInt($('#vxDur').value) || 4);
+  const useAudio = $('#vxAudio').checked && stState.audioUrl;
+  const useSubs = $('#vxSubs').checked;
+  vxStop = false;
+  $('#vxStop').style.display = 'inline-block';
+  $('#vxProgWrap').style.display = 'block';
+  $('#vxProg').style.width = '0%';
+  hideMsg('#vxMsg');
+  msg('#vxMsg', 'Preparing render (' + images.length + ' scenes × ' + perScene + 's @ ' + fps + 'fps)…', 'info');
+  try {
+    // fetch scene images
+    const imgs = [];
+    for (let i = 0; i < images.length; i++) {
+      const im = new Image();
+      im.decoding = 'async';
+      await new Promise((res, rej) => { im.onload = res; im.onerror = () => rej(new Error('image ' + (i + 1) + ' failed to load')); im.src = images[i].url; });
+      imgs.push(im);
+    }
+    const N = imgs.length * perScene * fps;
+    const canvas = document.createElement('canvas');
+    canvas.width = W; canvas.height = H;
+    const ctx = canvas.getContext('2d');
+
+    // Ken Burns draw for scene i at local frame fi (0..perScene*fps-1)
+    const drawFrame = (i, fi) => {
+      const im = imgs[i];
+      const p = perScene * fps;
+      const t = fi / Math.max(1, p - 1); // 0..1
+      const zoom = 1.05 + 0.18 * (i % 2 === 0 ? t : 1 - t); // in or out
+      const iw = W * zoom, ih = H * zoom;
+      const dx = (i % 3 === 0) ? (W - iw) * t : (i % 3 === 1) ? (W - iw) * (1 - t) : 0;
+      const dy = (i % 2 === 0) ? (H - ih) * t : 0;
+      ctx.fillStyle = '#0a0b12';
+      ctx.fillRect(0, 0, W, H);
+      const ar = im.naturalWidth / im.naturalHeight, car = W / H;
+      let s = 1, ox = 0, oy = 0;
+      if (ar > car) { s = H / im.naturalHeight; ox = (W - im.naturalWidth * s) / 2; } else { s = W / im.naturalWidth; oy = (H - im.naturalHeight * s) / 2; }
+      ctx.drawImage(im, ox + dx / 2, oy + dy / 2, im.naturalWidth * s * zoom, im.naturalHeight * s * zoom);
+      // progress bar + scene label + subtitles
+      ctx.fillStyle = 'rgba(0,0,0,0.35)';
+      ctx.fillRect(0, H - 8, W * ((i * p + fi) / N), 8);
+      ctx.fillStyle = 'rgba(255,255,255,0.85)';
+      ctx.font = '600 22px Segoe UI, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('∞ Video Generator', W / 2, 34);
+      if (useSubs && stState.beats[i]) {
+        const words = stState.beats[i].split(' ');
+        const chunk = words.slice(0, Math.ceil(words.length * Math.min(1, t + 0.05))).join(' ');
+        ctx.fillStyle = 'rgba(0,0,0,0.6)';
+        const tw = ctx.measureText(chunk).width;
+        ctx.fillRect(W / 2 - tw / 2 - 12, H - 96, tw + 24, 44);
+        ctx.fillStyle = '#fff';
+        ctx.font = '500 22px Segoe UI, sans-serif';
+        ctx.fillText(chunk, W / 2, H - 66);
+      }
+    };
+
+    // WebCodecs fast path (video only) — real MP4/WebM via muxer
+    if (!useAudio && window.VideoEncoder && window.VideoFrame) {
+      msg('#vxMsg', 'Encoding ' + N + ' frames with WebCodecs…', 'info');
+      let Muxer, ArrayBufferTarget;
+      const vp9 = { codec: 'vp09.00.10.08', mux: 'webm' }, vp8 = { codec: 'vp8', mux: 'webm' }, avc = { codec: 'avc1.42001f', mux: 'mp4' };
+      const sup = async cfg => { try { const s = await VideoEncoder.isConfigSupported(cfg); return !!(s && s.supported); } catch (e) { return false; } };
+      const useWebm = fmt === 'webm' && ((await sup(vp9)) || (await sup(vp8)));
+      const cfg = fmt === 'webm' ? ((await sup(vp9)) ? vp9 : vp8) : avc;
+      try {
+        const mod = await import(useWebm ? './webm-muxer.mjs' : './mp4-muxer.mjs');
+        Muxer = mod.Muxer; ArrayBufferTarget = mod.ArrayBufferTarget;
+      } catch (e) { msg('#vxMsg', 'Muxer import failed — falling back to MediaRecorder.', 'err'); throw new Error('muxer'); }
+      const vcodec = useWebm ? (cfg.codec.startsWith('vp09') ? 'V_VP9' : 'V_VP8') : 'avc1';
+      const muxer = new Muxer({ target: new ArrayBufferTarget(), video: { codec: vcodec, width: W, height: H, frameRate: fps } });
+      const enc = new VideoEncoder({ output: chunk => muxer.addVideoChunk(chunk, null), error: e => { throw e; } });
+      enc.configure({ codec: cfg.codec, width: W, height: H, bitrate: 12_000_000, framerate: fps });
+      let frame = 0;
+      for (let i = 0; i < imgs.length && !vxStop; i++) {
+        for (let f = 0; f < perScene * fps && !vxStop; f++) {
+          drawFrame(i, f);
+          const vf = new VideoFrame(canvas, { timestamp: Math.round(frame * 1e6 / fps), duration: Math.round(1e6 / fps) });
+          enc.encode(vf); vf.close();
+          frame++;
+          if (frame % 15 === 0) { $('#vxProg').style.width = Math.round(frame / N * 100) + '%'; await new Promise(r => setTimeout(r)); }
+        }
+      }
+      await enc.flush();
+      muxer.finalize();
+      const blob = new Blob([muxer.target.buffer], { type: useWebm ? 'video/webm' : 'video/mp4' });
+      const ext = useWebm ? 'webm' : 'mp4';
+      $('#vxOut').innerHTML = '<video controls style="width:100%;max-height:340px" src="' + URL.createObjectURL(blob) + '"></video><div style="margin-top:8px"><button class="btn green sm" data-vxdl>💾 Download .' + ext + ' (' + (blob.size / 1048576).toFixed(2) + ' MB)</button></div>';
+      $('#vxOut').querySelector('[data-vxdl]').addEventListener('click', () => download('video-' + Date.now() + '.' + ext, blob, blob.type));
+      msg('#vxMsg', '✅ Video rendered (' + frame + ' frames, ' + (blob.size / 1048576).toFixed(2) + ' MB).', 'ok');
+    } else {
+      // MediaRecorder path (with audio mix)
+      msg('#vxMsg', 'Recording ' + N + ' frames with MediaRecorder' + (useAudio ? ' + voiceover' : '') + '…', 'info');
+      const stream = canvas.captureStream(fps);
+      let audioCtx = null, gain = null, dest = null;
+      if (useAudio) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const buf = await (await fetch(stState.audioUrl)).arrayBuffer();
+        const audioBuf = await audioCtx.decodeAudioData(buf);
+        const src = audioCtx.createBufferSource();
+        src.buffer = audioBuf;
+        gain = audioCtx.createGain();
+        dest = audioCtx.createMediaStreamDestination();
+        src.connect(gain); gain.connect(dest);
+        dest.stream.getAudioTracks().forEach(t => stream.addTrack(t));
+        src.start();
+      }
+      const mime = ['video/webm;codecs=vp9,opus', 'video/webm;codecs=vp8,opus', 'video/webm', 'video/mp4'].find(m => MediaRecorder.isTypeSupported(m)) || 'video/webm';
+      const rec = new MediaRecorder(stream, { mimeType: mime, videoBitsPerSecond: 12_000_000 });
+      const chunks = [];
+      rec.ondataavailable = e => { if (e.data.size) chunks.push(e.data); };
+      const done = new Promise(res => rec.onstop = res);
+      rec.start(200);
+      for (let i = 0; i < imgs.length && !vxStop; i++) {
+        for (let f = 0; f < perScene * fps && !vxStop; f++) {
+          drawFrame(i, f);
+          if (f % 6 === 0) await new Promise(r => setTimeout(r, 1000 / fps * 6));
+        }
+        $('#vxProg').style.width = Math.round((i + 1) / imgs.length * 100) + '%';
+      }
+      rec.stop();
+      await done;
+      if (audioCtx) await audioCtx.close();
+      const blob = new Blob(chunks, { type: mime.split(';')[0] });
+      const ext = mime.includes('mp4') ? 'mp4' : 'webm';
+      $('#vxOut').innerHTML = '<video controls style="width:100%;max-height:340px" src="' + URL.createObjectURL(blob) + '"></video><div style="margin-top:8px"><button class="btn green sm" data-vxdl>💾 Download .' + ext + ' (' + (blob.size / 1048576).toFixed(2) + ' MB)</button></div>';
+      $('#vxOut').querySelector('[data-vxdl]').addEventListener('click', () => download('video-' + Date.now() + '.' + ext, blob, blob.type));
+      msg('#vxMsg', '✅ Video recorded' + (vxStop ? ' (stopped early)' : '') + ' — ' + (blob.size / 1048576).toFixed(2) + ' MB.', 'ok');
+    }
+  } catch (e) { msg('#vxMsg', 'Render error: ' + e.message, 'err'); }
+  $('#vxProgWrap').style.display = 'none';
+  $('#vxStop').style.display = 'none';
+});
+
+/* ================= WORKBENCH ================= */
+let ENGINES = [];
+(async () => {
+  try {
+    const j = await api('/api/engines');
+    ENGINES = j.engines || [];
+    $('#wbCount').textContent = (j.total || j.count) + ' engines — 48 instant + ' + (ENGINES.filter(e => e.power).length) + ' LLM power · free, no API key';
+    renderWB(ENGINES);
+  } catch (e) { $('#wbGrid').innerHTML = '<div class="msg show err">Server offline — start server.js</div>'; }
+})();
+function renderWB(list) {
+  const groups = {};
+  list.forEach(e => { (groups[e.group] = groups[e.group] || []).push(e); });
+  const gorder = ['Scripting','Directing','Look','Planning','Audio','Production','Publish','Strategy','Community','Business','Branding'];
+  let html = '<div class="msg show" style="margin-bottom:12px">🚀 <b>Power engines</b> (marked ⚡) run on your free local Ollama LLM with instant rules fallback — they may take a few seconds while the model thinks.</div>';
+  gorder.forEach(g => {
+    if (!groups[g]) return;
+    html += '<div class="group-label">' + g + ' · ' + groups[g].length + '</div>';
+    groups[g].forEach(e => {
+      const pw = e.power ? ' <span style="color:#f2aa4c">⚡LLM</span>' : '';
+      html += '<div class="engine-form" data-key="' + e.key + '"><div class="ef-head"><b>' + esc(e.label) + pw + '</b><span>' + esc(e.group) + '</span></div>';
+      (e.inputs || []).forEach(([inp, ph, def]) => {
+        html += '<input type="text" data-in="' + inp + '" placeholder="' + esc(ph) + '" value="' + esc(def || '') + '">';
+      });
+      html += '<button class="btn sm">Run</button><button class="btn sm gray" data-cp style="display:none">📋 Copy</button><div class="engine-res"></div></div>';
+    });
+  });
+  // any power-only groups not in gorder
+  Object.keys(groups).forEach(g => {
+    if (gorder.includes(g)) return;
+    html += '<div class="group-label">' + g + ' · ' + groups[g].length + '</div>';
+    groups[g].forEach(e => {
+      const pw = e.power ? ' <span style="color:#f2aa4c">⚡LLM</span>' : '';
+      html += '<div class="engine-form" data-key="' + e.key + '"><div class="ef-head"><b>' + esc(e.label) + pw + '</b><span>' + esc(e.group) + '</span></div>';
+      (e.inputs || []).forEach(([inp, ph, def]) => {
+        html += '<input type="text" data-in="' + inp + '" placeholder="' + esc(ph) + '" value="' + esc(def || '') + '">';
+      });
+      html += '<button class="btn sm">Run</button><button class="btn sm gray" data-cp style="display:none">📋 Copy</button><div class="engine-res"></div></div>';
+    });
+  });
+  $('#wbGrid').innerHTML = html || '<div class="msg show err">no engines</div>';
+}
+$('#wbGrid').addEventListener('click', async e => {
+  const b = e.target.closest('button'); if (!b) return;
+  const f = b.closest('.engine-form'); if (!f) return;
+  const key = f.dataset.key;
+  const input = {};
+  f.querySelectorAll('input[data-in]').forEach(i => input[i.dataset.in] = i.value);
+  const res = f.querySelector('.engine-res');
+  res.textContent = '⏳ running…'; res.classList.add('show');
+  try {
+    const j = await api('/api/engine/run?key=' + key + '&' + Object.entries(input).map(([a, c]) => 'in_' + a + '=' + encodeURIComponent(c)).join('&'));
+    const r = j.result || {};
+    res.textContent = formatEngine(r);
+    const cp = f.querySelector('[data-cp]');
+    if (cp) { cp.style.display = 'inline-block'; cp.onclick = async () => { try { await navigator.clipboard.writeText(res.textContent); cp.textContent = '✓ Copied'; setTimeout(() => cp.textContent = '📋 Copy', 1200); } catch (e) {} }; }
+  } catch (err) { res.textContent = 'error: ' + err.message; }
+});
+function formatEngine(r) {
+  if (r.error) return '❌ ' + r.error;
+  const lines = [];
+  for (const k in r) {
+    const v = r[k];
+    if (v === null || v === undefined || v === '') continue;
+    if (Array.isArray(v)) lines.push('▸ ' + k.toUpperCase() + ':\n' + v.map(x => '   • ' + (x && typeof x === 'object' ? (x.line ? '[' + (x.time || '') + '] ' + (x.kind || '') + ' — ' + x.line : JSON.stringify(x)) : x)).join('\n'));
+    else if (typeof v === 'object') { try { lines.push('▸ ' + k.toUpperCase() + ':\n' + JSON.stringify(v, null, 1).split('\n').map(x => '   ' + x).join('\n')); } catch (e) {} }
+    else lines.push('▸ ' + k.toUpperCase() + ': ' + v);
+  }
+  return lines.join('\n');
+}
+$('#wbSearch').addEventListener('input', e => {
+  const q = e.target.value.toLowerCase();
+  renderWB(ENGINES.filter(en => (en.label + ' ' + en.group + ' ' + en.key + ' ' + (en.inputs || []).map(i => i[0]).join(' ')).toLowerCase().includes(q)));
+});
+$('#wbClear').addEventListener('click', () => $$('.engine-res').forEach(r => { r.textContent = ''; r.classList.remove('show'); }));
+
+/* ================= IMAGE STUDIO ================= */
+$('#imGen').addEventListener('click', () => genImages(1));
+$('#imGen4').addEventListener('click', () => genImages(4));
+let imStyle = '';
+$$('#imStyles .pill').forEach(p => p.addEventListener('click', () => {
+  $$('#imStyles .pill').forEach(x => x.classList.remove('on'));
+  p.classList.add('on');
+  imStyle = p.dataset.s;
+}));
+async function genImages(n) {
+  const prompt = ($('#imPrompt').value.trim() + (imStyle ? ', ' + imStyle : '')); if (!prompt) { msg('#imMsg', 'Enter a prompt.', 'err'); return; }
+  hideMsg('#imMsg');
+  const w = $('#imW').value, h = $('#imH').value, model = $('#imModel').value;
+  for (let i = 0; i < n; i++) {
+    const seed = $('#imSeed').value.trim() || String(Math.floor(Math.random() * 99999));
+    msg('#imMsg', 'Generating ' + (i + 1) + '/' + n + '… (Flux can take 10–40s)', 'info');
+    const card = document.createElement('div');
+    card.className = 'item';
+    card.innerHTML = '<div style="height:120px;display:flex;align-items:center;justify-content:center;color:var(--mut);font-size:11px"><span class="loader"></span></div><div class="meta">generating…</div>';
+    $('#imGrid').prepend(card);
+    try {
+      const r = await api('/api/aigen?prompt=' + encodeURIComponent(prompt) + '&w=' + w + '&h=' + h + '&model=' + model + '&seed=' + seed);
+      if (r._bytes && r._bytes.byteLength > 500) {
+        const url = URL.createObjectURL(new Blob([r._bytes], { type: 'image/jpeg' }));
+        card.innerHTML = '<img src="' + url + '"><div class="meta"><button class="btn sm gray" data-dl="' + i + '">💾 Download</button> <span class="muted">seed ' + seed + '</span></div>';
+        card.querySelector('[data-dl]').addEventListener('click', () => download('ai-image-' + seed + '.jpg', new Blob([r._bytes], { type: 'image/jpeg' }), 'image/jpeg'));
+        $('#imSeed').value = seed;
+      } else { card.innerHTML = '<div style="height:120px;display:flex;align-items:center;justify-content:center;color:var(--acc3)">throttled</div><div class="meta">Pollinations busy — retry</div>'; }
+    } catch (e) { card.innerHTML = '<div style="height:120px;display:flex;align-items:center;justify-content:center;color:var(--acc3)">error</div><div class="meta">' + esc(e.message) + '</div>'; }
+  }
+  msg('#imMsg', 'Done.', 'ok');
+}
+$('#imSave').addEventListener('click', () => { msg('#imMsg', 'Right-click each image → Save, or use the 💾 buttons.', 'info'); });
+
+/* ================= STOCK LIBRARY ================= */
+$('#skGo').addEventListener('click', async () => {
+  const q = $('#skQ').value.trim(); if (!q) return;
+  const src = $('#skSrc').value;
+  hideMsg('#skMsg');
+  $('#skGrid').innerHTML = '<div class="muted" style="grid-column:1/-1"><span class="loader"></span> searching ' + ({ commons: 'Wikimedia Commons', openverse: 'Openverse', archive: 'Internet Archive' }[src]) + '…</div>';
+  try {
+    if (src === 'openverse') {
+      const j = await api('/api/openverse?q=' + encodeURIComponent(q) + '&n=18');
+      $('#skGrid').innerHTML = '';
+      if (!j.images || !j.images.length) { $('#skGrid').innerHTML = '<div class="muted" style="grid-column:1/-1">No results — try different keywords.</div>'; return; }
+      j.images.forEach(it => {
+        const d = document.createElement('div');
+        d.className = 'item';
+        d.innerHTML = '<img loading="lazy" src="' + esc(it.thumb) + '" onerror="this.style.display=\'none\'"><div class="meta"><b>' + esc(it.title.slice(0, 42)) + '</b><br>' + (it.width ? it.width + '×' + it.height : '') + ' · ' + esc(it.license || '') + '</div>';
+        d.querySelector('img').addEventListener('click', () => {
+          $('#imPrompt').value = it.title + ' (' + (it.creator || 'CC ' + (it.license || '')) + ')';
+          NAV.forEach(t => $('#tab-' + t).classList.toggle('on', t === 'image'));
+          $$('#nav button').forEach(x => x.classList.toggle('on', x.dataset.t === 'image'));
+        });
+        $('#skGrid').appendChild(d);
+      });
+      msg('#skMsg', j.count + ' CC images for "' + q + '" — click to load into Image Studio', 'ok');
+      return;
+    }
+    if (src === 'archive') {
+      const j = await api('/api/archive?q=' + encodeURIComponent(q) + '&n=15');
+      $('#skGrid').innerHTML = '';
+      if (!j.items || !j.items.length) { $('#skGrid').innerHTML = '<div class="muted" style="grid-column:1/-1">No results — try different keywords.</div>'; return; }
+      j.items.forEach(it => {
+        const d = document.createElement('div');
+        d.className = 'item';
+        d.innerHTML = '<img loading="lazy" src="' + esc(it.thumb) + '" onerror="this.style.display=\'none\'"><div class="meta"><b>' + esc(it.title.slice(0, 42)) + '</b><br>' + esc(it.type) + ' · <a href="' + esc(it.page) + '" target="_blank">open ↗</a></div>';
+        $('#skGrid').appendChild(d);
+      });
+      msg('#skMsg', j.count + ' Archive.org items for "' + q + '" — open to stream/download', 'ok');
+      return;
+    }
+    const j = await api('/api/commons?q=' + encodeURIComponent(q) + '&type=' + $('#skType').value);
+    $('#skGrid').innerHTML = '';
+    if (!j.items || !j.items.length) { $('#skGrid').innerHTML = '<div class="muted" style="grid-column:1/-1">No results — try different keywords.</div>'; return; }
+    j.items.forEach(it => {
+      const d = document.createElement('div');
+      d.className = 'item';
+      d.innerHTML = (it.type === 'video' ? '<video src="' + esc(it.thumb) + '" muted playsinline style="width:100%;aspect-ratio:16/10;object-fit:cover"></video>' : '<img loading="lazy" src="' + esc(it.thumb) + '" onerror="this.style.display=\'none\'">') +
+        '<div class="meta"><b>' + esc(it.title.slice(0, 42)) + '</b><br>' + (it.w ? it.w + '×' + it.h : '') + ' · <a href="' + esc(it.pageurl) + '" target="_blank">source ↗</a></div>';
+      d.querySelector('img,video').addEventListener('click', () => {
+        $('#imPrompt').value = it.title;
+        NAV.forEach(t => $('#tab-' + t).classList.toggle('on', t === 'image'));
+        $$('#nav button').forEach(x => x.classList.toggle('on', x.dataset.t === 'image'));
+      });
+      $('#skGrid').appendChild(d);
+    });
+    msg('#skMsg', j.total + ' results for "' + q + '"', 'ok');
+  } catch (e) { $('#skGrid').innerHTML = ''; msg('#skMsg', 'Search failed: ' + e.message, 'err'); }
+});
+$('#skQ').addEventListener('keydown', e => { if (e.key === 'Enter') $('#skGo').click(); });
+
+/* ================= AI COPILOT ================= */
+const cpHistory = [];
+async function cpStatus() {
+  try {
+    const j = await api('/api/llm/status');
+    $('#cpEngineTag').textContent = j.ollama ? 'engine: Ollama · ' + (j.ollamaModel || (j.ollamaModels[0] || '')) + ' · ' + j.ollamaModels.length + ' models' : 'engine: rules fallback';
+    // populate the model picker once with real local models
+    const sel = $('#cpModel');
+    if (j.ollama && sel.options.length <= 3) {
+      const cur = sel.value;
+      (j.ollamaModels || []).forEach(m => {
+        const o = document.createElement('option');
+        o.value = 'ollama:' + m; o.textContent = '🦙 ' + m;
+        sel.appendChild(o);
+      });
+      sel.value = cur;
+    }
+  } catch (e) { $('#cpEngineTag').textContent = 'engine: offline'; }
+}
+cpStatus();
+setInterval(cpStatus, 30000);
+function cpAdd(text, who) {
+  const d = document.createElement('div');
+  d.className = 'bub ' + who;
+  d.textContent = text;
+  $('#cpChat').appendChild(d);
+  $('#cpChat').scrollTop = $('#cpChat').scrollHeight;
+  return d;
+}
+async function cpAsk(q) {
+  if (!q.trim()) return;
+  cpAdd(q, 'user');
+  const sys = 'You are the AI copilot inside a free AI video studio. Help with scripts, titles, descriptions, storyboards, editing, YouTube/TikTok strategy. Be concise and practical.';
+  const engine = $('#cpModel').value;
+  const d = cpAdd('thinking…', 'ai');
+  try {
+    const j = await api('/api/llm?engine=' + engine + '&sys=' + encodeURIComponent(sys) + '&q=' + encodeURIComponent(q));
+    if (j.error) { d.textContent = '⚠ ' + j.error; return; }
+    d.textContent = j.content || j.text || '(empty response)';
+    $('#cpEngineTag').textContent = 'engine: ' + j.engine + ' · ' + (j.model || '');
+    cpHistory.push({ role: 'user', content: q }, { role: 'assistant', content: j.content || j.text || '' });
+  } catch (e) { d.textContent = '⚠ ' + e.message; }
+}
+$('#cpSend').addEventListener('click', () => { const v = $('#cpIn').value; $('#cpIn').value = ''; cpAsk(v); });
+$('#cpIn').addEventListener('keydown', e => { if (e.key === 'Enter') $('#cpSend').click(); });
+const PRESETS = [
+  ['🎬 30s product ad script', 'Write a punchy 30-second video ad script for a product that'],
+  ['📱 Viral Shorts hook', 'Give me 5 viral hooks for a YouTube Short about'],
+  ['🧠 Explainer outline', 'Outline a 3-minute explainer video about'],
+  ['📈 Strategy', 'How should a new channel grow in 2026? Short strategy.'],
+  ['🎞 Edit ideas', 'Creative editing techniques for a travel vlog:'],
+  ['🗣 Localize', 'Localize this for an Indian audience:']
+];
+$('#cpPresets').innerHTML = PRESETS.map(([l, p]) => '<button class="pill">' + l + '</button>').join('');
+$$('#cpPresets button').forEach((b, i) => b.addEventListener('click', () => {
+  const idea = $('#stIdea').value.trim();
+  $('#cpIn').value = PRESETS[i][1] + (idea ? ' "' + idea + '"' : '');
+  $('#cpSend').click();
+}));
+$$('[data-cpa]').forEach(b => b.addEventListener('click', () => {
+  const idea = $('#stIdea').value.trim();
+  $('#cpIn').value = b.dataset.cpa + (idea ? ' "' + idea + '"' : '');
+  $('#cpSend').click();
+}));
+cpAdd('Hi! I\'m your free AI copilot. Ask me for scripts, titles, hooks, or strategy — I run on your local Ollama (llama3.2), no account needed.', 'sys');
+
+$('#cpCtx').addEventListener('click', () => {
+  const idea = $('#stIdea').value.trim();
+  const plan = ($('#stOut').textContent || '').slice(0, 1200);
+  const script = ($('#stScript').value || '').trim().slice(0, 800);
+  const pub = ($('#stPubOut').textContent || '').slice(0, 800);
+  if (!idea && !plan && !script && !pub) { msg('#cpMsg', 'Studio is empty — generate a plan first.', 'err'); return; }
+  const ctx = 'My current video project:\n\nIDEA: ' + idea + '\n\nPLAN:\n' + plan + '\n\nSCRIPT:\n' + script + '\n\nPUBLISH PACK:\n' + pub;
+  cpAsk('Here is my project context — review it and suggest 3 concrete improvements:\n' + ctx);
+  msg('#cpMsg', 'Context sent to copilot.', 'ok');
+});
+$('#cpClear').addEventListener('click', () => { $('#cpChat').innerHTML = ''; cpHistory.length = 0; });
+$('#cpCopy').addEventListener('click', async () => {
+  const bubbles = $('#cpChat').querySelectorAll('.bub.ai');
+  const last = bubbles[bubbles.length - 1];
+  if (!last) return;
+  try { await navigator.clipboard.writeText(last.textContent); msg('#cpMsg', 'Copied.', 'ok'); } catch (e) { msg('#cpMsg', 'Copy failed.', 'err'); }
+});
+
+/* ================= ON-DEVICE AI ================= */
+const dvState = { loaded: 0, inf: 0 };
+const MODELS = [
+  { id: 'sentiment', name: '😊 Sentiment', desc: 'distilbert · positive/negative (0.7 MB)', pipe: 'text-classification', model: 'Xenova/distilbert-base-uncased-finetuned-sst-2-english', run: out => out[0] ? '😊 ' + out[0].label + ' — ' + Math.round(out[0].score * 100) + '%' : '' },
+  { id: 'emotion', name: '🎭 Emotion', desc: 'bert-base emotion · 6 emotions (5 MB)', pipe: 'text-classification', model: 'Xenova/bert-base-uncased-emotion', run: out => (out[0] ? '🎭 ' + out[0].label + ' — ' + Math.round(out[0].score * 100) + '%' : '') },
+  { id: 'zero', name: '🧩 Zero-Shot Topics', desc: 'mobilebert MNLI · classify into your labels (1 MB)', pipe: 'zero-shot-classification', model: 'Xenova/mobilebert-uncased-mnli', run: out => out ? (out.labels || []).map((l, i) => '• ' + l + ': ' + Math.round((out.scores || [])[i] * 100) + '%').join('\n') : '' },
+  { id: 'qa', name: '❓ Question Answering', desc: 'distilbert SQUAD · answer from your text (4 MB)', pipe: 'question-answering', model: 'Xenova/distilbert-base-uncased-distilled-squad', run: out => out ? '✅ ' + out.answer + ' (confidence ' + Math.round(out.score * 100) + '%)' : '' },
+  { id: 'sum', name: '📄 Summarizer', desc: 'distilbart · long text → TL;DR (270 MB)', pipe: 'summarization', model: 'Xenova/distilbart-cnn-6-6', run: out => out && out[0] ? '📄 ' + out[0].summary_text : '' },
+  { id: 'trans', name: '🌍 Translator', desc: 'nllb-200 · 200 languages (250 MB)', pipe: 'translation', model: 'Xenova/nllb-200-distilled-600M', run: out => out && out[0] ? '🌍 ' + out[0].translation_text : '' },
+  { id: 'cap', name: '🖼 Image Captioner', desc: 'blip-base · describe any image (350 MB)', pipe: 'image-to-text', model: 'Xenova/blip-base', run: out => out && out[0] ? '🖼 ' + out[0].generated_text : '' },
+  { id: 'asr', name: '🎙 Whisper Transcribe', desc: 'whisper-tiny · speech → text from mic (40 MB)', pipe: 'automatic-speech-recognition', model: 'Xenova/whisper-tiny', run: out => out ? '🎙 ' + (out.text || '') : '' }
+];
+let pipelines = {};
+function dvRender() {
+  const dv = $('#dvModels');
+  dv.innerHTML = '';
+  MODELS.forEach(m => {
+    const row = document.createElement('div');
+    row.className = 'model-row';
+    row.style.flexWrap = 'wrap';
+    let extra = '';
+    if (m.pipe === 'zero-shot-classification') extra = '<input type="text" placeholder="labels, comma-separated (e.g. tech, health, money)" style="min-width:180px">';
+    if (m.pipe === 'question-answering' || m.pipe === 'summarization') extra = '<textarea placeholder="' + (m.pipe === 'question-answering' ? 'context paragraph…' : 'long text to summarize…') + '" rows="2" style="min-width:200px"></textarea>';
+    if (m.pipe === 'translation') extra = '<select style="min-width:90px"><option value="eng_Latn">from EN</option><option value="hin_Deva">from HI</option><option value="fra_Latn">from FR</option><option value="spa_Latn">from ES</option></select><select style="min-width:90px"><option value="hin_Deva" selected>→ HI</option><option value="eng_Latn">→ EN</option><option value="fra_Latn">→ FR</option><option value="spa_Latn">→ ES</option><option value="tam_Taml">→ TA</option><option value="tel_Telu">→ TE</option></select>';
+    if (m.pipe === 'image-to-text') extra = '<input type="file" accept="image/*" style="min-width:170px"><input type="text" placeholder="optional prompt (e.g. a photo of)" style="min-width:120px">';
+    if (m.pipe === 'automatic-speech-recognition') extra = '<button class="btn gray sm" data-rec>🎙 Record from mic</button><span class="muted" data-reclbl style="font-size:11px"> click → speak → click stop</span><audio data-recplay controls style="display:none;max-width:180px;height:30px"></audio>';
+    row.innerHTML = '<div class="info"><b>' + m.name + '</b><p>' + m.desc + '</p></div>' + extra +
+      (m.pipe === 'image-to-text' || m.pipe === 'automatic-speech-recognition' ? '' : '<input type="text" placeholder="' + (m.pipe === 'question-answering' ? 'question…' : 'text to analyze…') + '" style="min-width:160px">') +
+      '<button class="btn sm">Load & Run</button><div class="engine-res" style="display:block;min-width:140px"></div>';
+    if (m.pipe === 'automatic-speech-recognition') {
+      let rec = null, chunks = [];
+      row.querySelector('[data-rec]').addEventListener('click', async () => {
+        const btn = row.querySelector('[data-rec]'), lbl = row.querySelector('[data-reclbl]'), play = row.querySelector('[data-recplay]');
+        if (rec) { rec.stop(); btn.textContent = '🎙 Record from mic'; lbl.textContent = 'processing…'; return; }
+        try {
+          const st = await navigator.mediaDevices.getUserMedia({ audio: true });
+          rec = new MediaRecorder(st); chunks = [];
+          rec.ondataavailable = e => { if (e.data.size) chunks.push(e.data); };
+          rec.onstop = () => {
+            const blob = new Blob(chunks, { type: 'audio/webm' });
+            play.src = URL.createObjectURL(blob); play.style.display = 'inline-block';
+            row._recBlob = blob;
+            st.getTracks().forEach(t => t.stop());
+            lbl.textContent = 'recorded ' + Math.round(blob.size / 1024) + ' KB → Load & Run';
+            btn.textContent = '🎙 Record from mic';
+            rec = null;
+          };
+          rec.start(); btn.textContent = '⏹ Stop recording'; lbl.textContent = 'recording… speak now';
+        } catch (e) { lbl.textContent = 'mic error: ' + e.message; }
+      });
+    }
+    if (m.pipe === 'image-to-text') {
+      row.querySelector('input[type=file]').addEventListener('change', e => {
+        const f = e.target.files[0]; if (!f) return;
+        const rd = new FileReader();
+        rd.onload = ev => { row._imgData = ev.target.result; row.querySelector('.engine-res').textContent = 'image loaded (' + Math.round(f.size / 1024) + ' KB)'; };
+        rd.readAsDataURL(f);
+      });
+    }
+    row.querySelector('button.btn.sm:not([data-rec])').addEventListener('click', async () => {
+      const res = row.querySelector('.engine-res');
+      const btn = row.querySelector('button.btn.sm:not([data-rec])');
+      const inputs = row.querySelectorAll('input,textarea,select');
+      const text = inputs[inputs.length - 1].value.trim();
+      const labels = m.pipe === 'zero-shot-classification' ? inputs[0].value.split(',').map(x => x.trim()).filter(Boolean) : [];
+      const ctx = (m.pipe === 'question-answering' || m.pipe === 'summarization') ? inputs[0].value.trim() : '';
+      if (m.pipe === 'image-to-text' && !row._imgData) { res.textContent = '⚠ choose an image first'; return; }
+      if (m.pipe === 'automatic-speech-recognition' && !row._recBlob) { res.textContent = '⚠ record from mic first'; return; }
+      if (!text && !['image-to-text', 'automatic-speech-recognition', 'summarization'].includes(m.pipe)) { res.textContent = '⚠ type text first'; return; }
+      if (m.pipe === 'question-answering' && (!ctx || !text)) { res.textContent = '⚠ need context + question'; return; }
+      btn.disabled = true; btn.textContent = 'loading…';
+      res.textContent = 'downloading model…';
+      $('#dvStatus').textContent = 'loading ' + m.id;
+      try {
+        if (!pipelines[m.id]) {
+          pipelines[m.id] = await pipe(m.pipe, m.model, { progress_callback: p => {
+            if (p.status === 'progress') { $('#dvProgWrap').style.display = 'block'; $('#dvProg').style.width = Math.round(p.progress) + '%'; }
+          }});
+          $('#dvProgWrap').style.display = 'none';
+          dvState.loaded++; $('#dvLoaded').textContent = dvState.loaded;
+        }
+        $('#dvStatus').textContent = 'running…';
+        let out;
+        if (m.pipe === 'zero-shot-classification') out = await pipelines[m.id](text, labels.length ? labels : ['technology', 'health', 'finance', 'entertainment', 'education']);
+        else if (m.pipe === 'question-answering') out = await pipelines[m.id](text, ctx);
+        else if (m.pipe === 'summarization') out = await pipelines[m.id](ctx || text);
+        else if (m.pipe === 'translation') out = await pipelines[m.id](text, { src_lang: inputs[0].value, tgt_lang: inputs[1].value });
+        else if (m.pipe === 'image-to-text') out = await pipelines[m.id](row._imgData, { prompt: inputs[0].value || 'a photo of' });
+        else if (m.pipe === 'automatic-speech-recognition') out = await pipelines[m.id](row._recBlob);
+        else out = await pipelines[m.id](text);
+        res.textContent = m.run(out);
+        dvState.inf++; $('#dvInf').textContent = dvState.inf;
+        $('#dvStatus').textContent = 'idle';
+      } catch (e) { res.textContent = '⚠ ' + e.message; $('#dvStatus').textContent = 'error'; }
+      btn.disabled = false; btn.textContent = 'Load & Run';
+    });
+    dv.appendChild(row);
+  });
+}
+let pipe;
+function loadTransformers() {
+  const cdn = [
+    'https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2',
+    'https://unpkg.com/@xenova/transformers@2.17.2'
+  ];
+  return new Promise((resolve, reject) => {
+    let i = 0;
+    const tryLoad = () => {
+      if (i >= cdn.length) return reject(new Error('transformers.js CDN unreachable'));
+      const s = document.createElement('script');
+      s.src = cdn[i++];
+      s.onload = () => window.transformers ? resolve(window.transformers) : tryLoad();
+      s.onerror = tryLoad;
+      document.head.appendChild(s);
+    };
+    tryLoad();
+  });
+}
+(async () => {
+  dvRender();
+  try {
+    const tf = await loadTransformers();
+    pipe = tf.pipeline;
+    $('#dvRunTxt').textContent = '✅ Transformers.js loaded (' + tf.env.version + '). Models download from Hugging Face on first use, then run 100% offline.';
+  } catch (e) {
+    $('#dvRunTxt').textContent = '⚠ Could not load Transformers.js from CDN: ' + e.message + ' — on-device models need internet for the first download.';
+  }
+})();
+
+/* ================= GITHUB HUB ================= */
+$('#ghGo').addEventListener('click', async () => {
+  const q = $('#ghQ').value.trim(); if (!q) return;
+  hideMsg('#ghMsg');
+  $('#ghOut').textContent = '⏳ searching…';
+  try {
+    const j = await api('/api/github/search?q=' + encodeURIComponent(q) + '&type=' + $('#ghType').value);
+    if (!j.items || !j.items.length) { $('#ghOut').textContent = 'No results.'; return; }
+    $('#ghOut').innerHTML = '<b>' + j.total + ' results</b>\n\n' + j.items.map(it => {
+      if ($('#ghType').value === 'repositories') return '⭐ ' + (it.stars || 0) + '  ' + it.name + '  [' + (it.lang || '—') + ']\n   ' + (it.desc || '') + '\n   ' + it.url;
+      return '📄 ' + it.name + ' — ' + it.path + '\n   ' + it.url;
+    }).join('\n\n');
+    msg('#ghMsg', 'Click a result to view it in the repo browser.', 'info');
+  } catch (e) { $('#ghOut').textContent = 'error: ' + e.message; }
+});
+$('#ghQ').addEventListener('keydown', e => { if (e.key === 'Enter') $('#ghGo').click(); });
+
+$('#ghTrend').addEventListener('click', async () => {
+  const lang = $('#ghTrendLang').value.trim();
+  $('#ghTrendOut').textContent = '⏳ fetching…';
+  try {
+    const j = await api('/api/github/trending?since=daily&lang=' + encodeURIComponent(lang));
+    if (!j.repos || !j.repos.length) { $('#ghTrendOut').textContent = 'No trending repos right now.'; return; }
+    $('#ghTrendOut').innerHTML = '<b>⭐ Trending today' + (lang ? ' · ' + esc(lang) : '') + '</b>\n\n' + j.repos.map((r, i) => (i + 1) + '. ⭐' + r.stars + ' · 🍴' + r.forks + '  ' + r.full_name + ' [' + (r.language || '—') + ']\n   ' + (r.description || '') + '\n   ' + r.url).join('\n\n');
+  } catch (e) { $('#ghTrendOut').textContent = 'error: ' + e.message; }
+});
+
+$('#ghTree').addEventListener('click', async () => {
+  const repo = $('#ghRepo').value.trim(); if (!repo) { msg('#ghMsg', 'Enter owner/repo.', 'err'); return; }
+  const ref = $('#ghRef').value.trim() || 'HEAD';
+  hideMsg('#ghMsg');
+  $('#ghTreeOut').textContent = '⏳ fetching tree…';
+  try {
+    const j = await api('/api/github/repo?repo=' + encodeURIComponent(repo) + '&ref=' + encodeURIComponent(ref));
+    if (!j.tree) { $('#ghTreeOut').textContent = '⚠ ' + (j.error || 'repo not found'); return; }
+    $('#ghTreeOut').innerHTML = '<b>' + j.total + ' files</b>' + (j.truncated ? ' (truncated)' : '') + '<br>' +
+      j.tree.map(t => '<div class="tree-line" data-repo="' + repo + '" data-ref="' + ref + '" data-path="' + esc(t.path) + '">📄 ' + esc(t.path) + '<span class="sz">' + (t.size ? Math.round(t.size / 1024) + ' KB' : '') + '</span></div>').join('');
+    $('#ghTreeOut').querySelectorAll('.tree-line').forEach(l => l.addEventListener('click', async () => {
+      $('#ghFileOut').textContent = '⏳ fetching…';
+      try {
+        const f = await api('/api/github/file?repo=' + encodeURIComponent(l.dataset.repo) + '&ref=' + encodeURIComponent(l.dataset.ref) + '&path=' + encodeURIComponent(l.dataset.path));
+        if (f.error) { $('#ghFileOut').textContent = '⚠ ' + f.error; return; }
+        $('#ghFileOut').textContent = '// ' + l.dataset.path + ' · ' + f.bytes + ' bytes\n' + f.content.slice(0, 60000);
+      } catch (e) { $('#ghFileOut').textContent = '⚠ ' + e.message; }
+    }));
+  } catch (e) { $('#ghTreeOut').textContent = 'error: ' + e.message; }
+});
+
+$('#ghGist').addEventListener('click', async () => {
+  const content = $('#ghGistBody').value.trim(); if (!content) { msg('#ghGistMsg', 'Gist content is empty.', 'err'); return; }
+  const token = localStorage.getItem('vg_gh_token') || '';
+  if (!token) { msg('#ghGistMsg', 'Add a GitHub token first (GitHub Hub → token field, needs gist scope).', 'err'); return; }
+  msg('#ghGistMsg', 'creating gist…', 'info');
+  try {
+    const j = await api('/api/github/gist', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token, filename: $('#ghGistName').value, desc: $('#ghGistDesc').value, content, public: true })
+    });
+    if (j.ok) { msg('#ghGistMsg', '✅ Gist created: ' + j.url, 'ok'); window.open(j.url, '_blank'); }
+    else msg('#ghGistMsg', '⚠ ' + (j.error || 'gist failed'), 'err');
+  } catch (e) { msg('#ghGistMsg', '⚠ ' + e.message, 'err'); }
+});
+
+$('#ghTokenSave').addEventListener('click', () => { localStorage.setItem('vg_gh_token', $('#ghToken').value.trim()); msg('#ghTokenMsg', 'Token saved in this browser.', 'ok'); });
+$('#ghTokenClear').addEventListener('click', () => { localStorage.removeItem('vg_gh_token'); $('#ghToken').value = ''; msg('#ghTokenMsg', 'Token cleared.', 'ok'); });
+
+/* ================= TRENDS ================= */
+$('#trGo').addEventListener('click', async () => {
+  hideMsg('#trMsg');
+  const src = $('#trSrc').value;
+  $('#trOut').textContent = '⏳ fetching live trends…';
+  try {
+    if (src === 'reddit') {
+      const sub = $('#trArg').value.trim() || 'popular';
+      const j = await api('/api/reddit?sub=' + encodeURIComponent(sub) + '&t=day');
+      if (!j.posts || !j.posts.length) { $('#trOut').textContent = 'No posts right now.'; return; }
+      $('#trOut').innerHTML = '<b>🔴 Reddit r/' + esc(sub) + ' top today</b>\n\n' + j.posts.map((p, i) => (i + 1) + '. [' + p.score + '▲] ' + p.title + '\n   r/' + p.subreddit + ' · ' + p.comments + ' comments · ' + p.url).join('\n\n');
+      msg('#trMsg', 'Tip: pick a topic → hit 💡 Turn into Video Ideas', 'ok');
+      return;
+    }
+    if (src === 'github') {
+      const lang = $('#trArg').value.trim();
+      const j = await api('/api/github/trending?since=daily&lang=' + encodeURIComponent(lang));
+      if (!j.repos || !j.repos.length) { $('#trOut').textContent = 'No trending repos right now.'; return; }
+      $('#trOut').innerHTML = '<b>🐙 Trending on GitHub today</b>\n\n' + j.repos.map((r, i) => (i + 1) + '. ⭐' + r.stars + ' ' + r.full_name + ' [' + (r.language || '—') + ']\n   ' + (r.description || '') + '\n   ' + r.url).join('\n\n');
+      msg('#trMsg', 'Tip: explain a trending repo in a video!', 'ok');
+      return;
+    }
+    const j = await api('/api/trends');
+    if (!j.sources || !j.sources.length) { $('#trOut').textContent = 'No trends right now.'; return; }
+    $('#trOut').innerHTML = '<b>🔥 Live now (Hacker News + Wikipedia)</b>\n\n' + j.sources.map((s, i) => (i + 1) + '. [' + s.source + '] ' + s.title + '\n   ' + s.url).join('\n\n');
+    msg('#trMsg', 'Tip: pick a topic → hit 💡 Turn into Video Ideas', 'ok');
+  } catch (e) { $('#trOut').textContent = 'error: ' + e.message; }
+});
+$('#trIdeas').addEventListener('click', async () => {
+  hideMsg('#trMsg');
+  const txt = $('#trOut').textContent || '';
+  const topics = txt.split('\n').filter(l => /^\d+\./.test(l)).map(l => l.replace(/^[\d.]+/, '').replace(/\[.*?\]/, '').trim()).slice(0, 5);
+  if (!topics.length) { msg('#trMsg', 'Load trends first.', 'err'); return; }
+  const idea = topics[0];
+  $('#stIdea').value = idea;
+  msg('#trMsg', 'Loaded "' + idea + '" into Studio — generate a plan!', 'ok');
+});
+
+/* ================= TRANSLATE ================= */
+$('#trGoBtn').addEventListener('click', async () => {
+  const q = $('#trIn').value.trim(); if (!q) return;
+  $('#trOut2').textContent = '⏳ translating…';
+  try {
+    const j = await api('/api/translate?tl=' + $('#trTl').value + '&q=' + encodeURIComponent(q));
+    if (j.error) { $('#trOut2').textContent = '⚠ ' + j.error; return; }
+    $('#trOut2').textContent = 'Detected: ' + j.detected + ' → ' + j.tl + '\n\n' + j.text;
+  } catch (e) { $('#trOut2').textContent = '⚠ ' + e.message; }
+});
+$('#trCopy').addEventListener('click', async () => {
+  try { await navigator.clipboard.writeText($('#trOut2').textContent || ''); msg('#trMsg', 'Copied', 'ok'); } catch (e) {}
+});
+
+/* ================= TTS ================= */
+$('#ttsGo').addEventListener('click', async () => {
+  const text = $('#ttsText').value.trim(); if (!text) { msg('#ttsMsg', 'Enter text to speak.', 'err'); return; }
+  hideMsg('#ttsMsg');
+  msg('#ttsMsg', 'synthesizing…', 'info');
+  $('#ttsAudio').innerHTML = '';
+  $('#ttsDown').style.display = 'none';
+  try {
+    const r = await api('/api/tts?tl=' + $('#ttsTl').value + '&q=' + encodeURIComponent(text));
+    if (!r._bytes || r._bytes.byteLength < 200) { msg('#ttsMsg', 'TTS throttled — wait a moment and retry.', 'err'); return; }
+    const url = URL.createObjectURL(new Blob([r._bytes], { type: 'audio/mpeg' }));
+    $('#ttsAudio').innerHTML = '<audio controls style="width:100%" src="' + url + '"></audio>';
+    $('#ttsDown').style.display = 'inline-block';
+    $('#ttsDown').onclick = () => download('voiceover.mp3', new Blob([r._bytes], { type: 'audio/mpeg' }), 'audio/mpeg');
+    msg('#ttsMsg', 'Ready — ' + Math.round(r._bytes.byteLength / 1024) + ' KB MP3.', 'ok');
+  } catch (e) { msg('#ttsMsg', 'error: ' + e.message, 'err'); }
+});
+$('#ttsText').addEventListener('keydown', e => { if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) $('#ttsGo').click(); });
+/* ================= REPO → VIDEO SKILLS ================= */
+$('#ghVidGo').addEventListener('click', async () => {
+  const repo = $('#ghVidRepo').value.trim(); if (!repo) { msg('#ghVidMsg', 'Enter owner/repo.', 'err'); return; }
+  hideMsg('#ghVidMsg');
+  $('#ghVidOut').textContent = '⏳ building video pack from ' + repo + '…';
+  try {
+    const j = await api('/api/github/video?repo=' + encodeURIComponent(repo));
+    if (j.error) { $('#ghVidOut').textContent = '⚠ ' + j.error; return; }
+    let o = '🐙 REPO → VIDEO PACK — ' + j.repo + '\n' + '═'.repeat(46) + '\n\n';
+    o += j.stats + ' · ' + (j.language || '—') + (j.topics.length ? ' · 🏷 ' + j.topics.join(', ') : '') + '\n\n';
+    o += '📖 WHAT IT DOES:\n  ' + j.description + '\n\n';
+    o += '🎬 5 VIDEO ANGLES:\n' + j.angles.map((a, i) => '  ' + (i + 1) + '. ' + a).join('\n') + '\n\n';
+    o += '📜 SCRIPT BEATS:\n' + j.script.split('\n').map(l => '  ' + l.trim()).join('\n') + '\n\n';
+    o += '📚 README SNIPPET:\n' + j.readmePreview.slice(0, 500) + (j.readmePreview.length > 500 ? '…' : '');
+    $('#ghVidOut').textContent = o;
+    $('#stIdea').value = j.angles[0];
+    msg('#ghVidMsg', 'Pack ready — angle #1 loaded into Studio. Hit Generate Plan!', 'ok');
+  } catch (e) { $('#ghVidOut').textContent = '⚠ ' + e.message; }
+});
+$('#ghVidRepo').addEventListener('keydown', e => { if (e.key === 'Enter') $('#ghVidGo').click(); });
+
+/* ================= THUMBNAIL FORGE ================= */
+let tfSeed = Math.floor(Math.random() * 99999);
+async function tfForge() {
+  const topic = $('#tfTopic').value.trim();
+  if (!topic) { msg('#tfMsg', 'Enter a video topic first.', 'err'); return; }
+  $('#tfMsg').textContent = '⏳ forging thumbnails…'; $('#tfMsg').className = 'msg show info';
+  $('#tfGrid').innerHTML = '';
+  try {
+    const j = await api('/api/thumbnail?topic=' + encodeURIComponent(topic) + '&seed=' + tfSeed);
+    (j.variants || []).forEach(v => {
+      const card = document.createElement('div');
+      card.className = 'item';
+      card.innerHTML = '<div style="height:120px;display:flex;align-items:center;justify-content:center;color:var(--mut);font-size:11px">generating…</div><div class="meta"><b>' + esc(v.label) + '</b> · loading</div>';
+      $('#tfGrid').appendChild(card);
+      const img = new Image();
+      img.onload = () => {
+        card.innerHTML = '';
+        card.appendChild(img); img.style.cssText = 'width:100%;border-radius:8px';
+        const meta = document.createElement('div'); meta.className = 'meta';
+        meta.innerHTML = '<b>' + esc(v.label) + '</b> · <a href="' + v.url + '" target="_blank" style="color:var(--acc)">open</a>';
+        card.appendChild(meta);
+        const dl = document.createElement('button'); dl.className = 'btn gray sm'; dl.textContent = '💾 Download';
+        dl.addEventListener('click', async () => {
+          try { const r = await fetch(v.url); const b = await r.blob(); download('thumbnail-' + v.v + '.jpg', b, 'image/jpeg'); } catch (e) {}
+        });
+        card.appendChild(dl);
+      };
+      img.onerror = () => { meta_fail(card, v.label); };
+      img.src = v.url;
+    });
+    msg('#tfMsg', '3 thumbnail variants forged. Reroll for a fresh set.', 'ok');
+  } catch (e) { msg('#tfMsg', 'Error: ' + e.message, 'err'); }
+}
+function meta_fail(card, label) {
+  card.innerHTML = '<div style="height:110px;display:flex;align-items:center;justify-content:center;color:var(--acc3);font-size:11px">image failed</div><div class="meta">' + esc(label) + ' · throttled — reroll</div>';
+}
+$('#tfGo').addEventListener('click', tfForge);
+$('#tfMore').addEventListener('click', () => { tfSeed = Math.floor(Math.random() * 999999); tfForge(); });
+
+async function runPowerUI(key, inputSel, outSel, btn) {
+  const input = {}; input[key === 'abtest' ? 'title' : 'prompt'] = $(inputSel).value.trim();
+  if (!input.title && !input.prompt) { $(outSel).textContent = 'Enter text first.'; return; }
+  btn.textContent = '⏳ thinking…';
+  try {
+    const j = await api('/api/engine/run?key=' + key + '&' + Object.entries(input).map(([a, b]) => 'in_' + a + '=' + encodeURIComponent(b)).join('&'));
+    let o = '';
+    if (key === 'abtest') o = ((j.llm) ? j.llm + '\n\n— fallback data —\n' : '') + JSON.stringify(j.result.variants || j.result, null, 1);
+    else if (j.llm) o = j.llm;
+    else o = JSON.stringify(j.result, null, 1);
+    $(outSel).textContent = o;
+    $(outSel).classList.add('show');
+  } catch (e) { $(outSel).textContent = 'Error: ' + e.message; }
+  btn.textContent = key === 'abtest' ? 'Design A/B Test' : 'Remix Formats';
+}
+$('#tfAbGo').addEventListener('click', e => runPowerUI('abtest', '#tfAbTitle', '#tfAbOut', e.target));
+$('#tfRemixGo').addEventListener('click', e => runPowerUI('remix', '#tfRemixQ', '#tfRemixOut', e.target));
+
+$('#tfMusicGo').addEventListener('click', async () => {
+  const q = $('#tfMusicQ').value.trim(); if (!q) return;
+  $('#tfMusicOut').textContent = '⏳ searching Internet Archive…';
+  try {
+    const j = await api('/api/music?q=' + encodeURIComponent(q));
+    $('#tfMusicOut').innerHTML = (j.tracks || []).map(t => '<div class="tree-line" style="padding:4px 0">🎵 <a href="' + t.url + '" target="_blank" style="color:var(--acc)">' + esc(t.title || t.id) + '</a></div>').join('') || 'No tracks found.';
+  } catch (e) { $('#tfMusicOut').textContent = 'Error: ' + e.message; }
+});
+
+/* ================= TOPIC RESEARCH ================= */
+$('#rsWikiGo').addEventListener('click', async () => {
+  const q = $('#rsWikiQ').value.trim(); if (!q) return;
+  $('#rsWikiOut').textContent = '⏳ researching Wikipedia…';
+  try {
+    const j = await api('/api/wiki?q=' + encodeURIComponent(q));
+    if (!j.ok || !(j.results || []).length) { $('#rsWikiOut').textContent = 'No Wikipedia results.'; return; }
+    let h = '';
+    j.results.forEach(r => {
+      h += '<b><a href="' + r.url + '" target="_blank" style="color:var(--acc)">' + esc(r.title) + '</a></b>\n' + esc(r.extract) + '\n\n';
+    });
+    h += '💡 VIDEO ANGLES:\n' + j.videoAngles.map(a => '• ' + a).join('\n');
+    $('#rsWikiOut').innerHTML = h.split('\n').map(l => l).join('<br>');
+  } catch (e) { $('#rsWikiOut').textContent = 'Error: ' + e.message; }
+});
+
+let rsIdeasSeed = 1;
+async function rsIdeas(reset) {
+  const q = $('#rsIdeasQ').value.trim() || 'AI video';
+  if (reset) { $('#rsIdeasOut').innerHTML = ''; rsIdeasSeed = 1; }
+  $('#rsIdeasOut').innerHTML += '<div style="color:var(--mut)">⏳ generating…</div>';
+  try {
+    const j = await api('/api/ideas?q=' + encodeURIComponent(q) + '&seed=' + rsIdeasSeed + '&n=8');
+    if (reset) $('#rsIdeasOut').innerHTML = '';
+    else $('#rsIdeasOut').lastChild.remove();
+    (j.items || []).forEach(it => {
+      const d = document.createElement('div');
+      d.style.cssText = 'padding:8px 0;border-bottom:1px solid var(--card2);cursor:pointer';
+      d.innerHTML = '<b>' + esc(it.title) + '</b><br><span class="muted">' + esc(it.format) + ' · hook at ' + it.hookTime + ' · mood: ' + it.mood + '</span>';
+      d.addEventListener('click', () => { $('#stIdea').value = it.title; msg('#rsIdeasMsg', 'Loaded into Studio — hit Generate Plan →', 'ok'); });
+      $('#rsIdeasOut').appendChild(d);
+    });
+    rsIdeasSeed = j.nextSeed;
+    msg('#rsIdeasMsg', (j.items || []).length + ' ideas · seed ' + rsIdeasSeed, 'ok');
+  } catch (e) { $('#rsIdeasOut').textContent = 'Error: ' + e.message; }
+}
+$('#rsIdeasGo').addEventListener('click', () => rsIdeas(true));
+$('#rsIdeasMore').addEventListener('click', () => rsIdeas(false));
+
+$('#rsNewsGo').addEventListener('click', async () => {
+  const q = $('#rsNewsQ').value.trim();
+  $('#rsNewsOut').textContent = '⏳ loading headlines…';
+  try {
+    const j = await api('/api/newsrss?q=' + encodeURIComponent(q));
+    if (!(j.items || []).length) { $('#rsNewsOut').textContent = j.note || 'No headlines found.'; return; }
+    $('#rsNewsOut').innerHTML = j.items.map(n => '<div style="padding:6px 0;border-bottom:1px solid var(--card2)">📰 <a href="' + n.url + '" target="_blank" style="color:var(--acc)">' + esc(n.title) + '</a> <span class="muted">' + n.date + '</span></div>').join('');
+  } catch (e) { $('#rsNewsOut').textContent = 'Error: ' + e.message; }
+});
+
+$('#rsFullGo').addEventListener('click', async () => {
+  const idea = $('#rsFullIdea').value.trim(); if (!idea) return;
+  $('#rsFullOut').textContent = '⏳ assembling full production script…';
+  try {
+    const j = await api('/api/scriptfull?idea=' + encodeURIComponent(idea) + '&duration=' + $('#rsFullDur').value);
+    if (!j.ok) { $('#rsFullOut').textContent = j.error || 'failed'; return; }
+    let o = '🎬 FULL SCRIPT — "' + idea + '" (' + j.totalDuration + ', ' + j.platform + ')\n' + '═'.repeat(40) + '\n\n';
+    (j.scenes || []).forEach(s => { o += 'SCENE ' + s.scene + ' [' + s.duration + '] 📷 ' + s.camera + '\n  ' + s.action + '\n  🎙 "' + s.narration + '"\n\n'; });
+    o += '🎨 PALETTE: ' + (j.colorPalette || []).join(' ') + '\n\n📜 VOICEOVER:\n' + j.fullScript;
+    $('#rsFullOut').textContent = o;
+    msg('#rsFullMsg', 'Full script assembled.', 'ok');
+  } catch (e) { $('#rsFullOut').textContent = 'Error: ' + e.message; }
+});
+$('#rsFullIdea').addEventListener('keydown', e => { if (e.key === 'Enter') $('#rsFullGo').click(); });
+$('#rsWikiQ').addEventListener('keydown', e => { if (e.key === 'Enter') $('#rsWikiGo').click(); });
+$('#rsNewsQ').addEventListener('keydown', e => { if (e.key === 'Enter') $('#rsNewsGo').click(); });
+
+/* ================= ∞ INFINITE FEATURES — EVERY PAGE ================= */
+const INF_ACTIONS = {
+  studio: { label: '🎬 Video Ideas', tip: 'click to load into Studio & plan', go: t => { $('#stIdea').value = t; msg('#stMsg', 'Idea loaded — hit Generate Plan →', 'ok'); } },
+  workbench: { label: '🧠 Engine Ideas', tip: 'click to filter Workbench', go: t => { $('#wbSearch').value = t.split(' — ')[0]; $('#wbSearch').dispatchEvent(new Event('input')); } },
+  image: { label: '🎨 Prompt Ideas', tip: 'click to load into Image Studio', go: t => { $('#imPrompt').value = t; msg('#imMsg', 'Prompt loaded — hit ✨ Generate Image', 'ok'); } },
+  stock: { label: '📚 Search Ideas', tip: 'click to search Stock', go: t => { $('#skQ').value = t; $('#skGo').click(); } },
+  copilot: { label: '⚡ Copilot Prompts', tip: 'click to ask the Copilot', go: t => { $('#cpIn').value = t; $('#cpSend').click(); } },
+  device: { label: '📡 On-Device Tasks', tip: 'click to copy', go: t => { navigator.clipboard.writeText(t).then(() => msg('#dvStatus', 'Copied "' + t.slice(0, 30) + '"', 'ok')); } },
+  github: { label: '🐙 Repo Ideas', tip: 'click to search GitHub', go: t => { $('#ghQ').value = t; $('#ghGo').click(); } },
+  trends: { label: '🔥 Topic Ideas', tip: 'click to load into Studio', go: t => { $('#stIdea').value = t; msg('#stMsg', 'Trend topic loaded into Studio — plan it!', 'ok'); } },
+  lang: { label: '🌐 Lines to Localize', tip: 'click to load into Translator', go: t => { $('#trIn').value = t; } },
+  tts: { label: '🗣 Voiceover Scripts', tip: 'click to load into TTS', go: t => { $('#ttsText').value = t; } },
+  forge: { label: '⚒️ Thumbnail Topics', tip: 'click to forge thumbnails', go: t => { $('#tfTopic').value = t; $('#tfGo').click(); } },
+  research: { label: '🔬 Research Ideas', tip: 'click to research the topic', go: t => { $('#rsWikiQ').value = t.replace(/^(nobody talks about this side of|i tried the impossible:|this changes everything about|the truth they hide about|stop scrolling —)\s*/i, ''); $('#rsWikiGo').click(); } }
+};
+const infState = {};
+function infFeedBuild() {
+  NAV.forEach(tab => {
+    const sec = $('#tab-' + tab); if (!sec) return;
+    const cfg = INF_ACTIONS[tab] || INF_ACTIONS.studio;
+    infState[tab] = { seed: 1, busy: false };
+    const box = document.createElement('div');
+    box.className = 'inf-feed';
+    box.innerHTML = '<div class="divider"></div><div class="inf-head"><b>∞ Infinite ' + cfg.label + '</b><span>' + cfg.tip + ' · endless ideas, unique every seed</span></div><div class="inf-grid" id="inf-' + tab + '"></div><div style="margin-top:12px" class="row"><button class="btn gray sm" id="infBtn-' + tab + '">∞ Load more ideas</button><span class="muted" id="infCount-' + tab + '"></span></div>';
+    sec.appendChild(box);
+    $('#infBtn-' + tab).addEventListener('click', () => infFeedLoad(tab));
+    infFeedLoad(tab);
+  });
+}
+async function infFeedLoad(tab) {
+  const st = infState[tab]; if (!st || st.busy) return;
+  st.busy = true;
+  const cfg = INF_ACTIONS[tab] || INF_ACTIONS.studio;
+  const btn = $('#infBtn-' + tab);
+  const grid = $('#inf-' + tab);
+  try {
+    const j = await api('/api/infinite-features?page=' + tab + '&seed=' + st.seed + '&n=12');
+    (j.items || []).forEach(it => {
+      const c = document.createElement('div');
+      c.className = 'inf-card';
+      c.innerHTML = '<div class="inf-emoji">' + it.emoji + '</div><div class="inf-title">' + esc(it.title) + '</div><div class="inf-desc">' + esc(it.desc) + '</div>';
+      c.addEventListener('click', () => { try { cfg.go(it.title); } catch (e) {} });
+      grid.appendChild(c);
+    });
+    st.seed = j.nextSeed || st.seed + 1;
+    $('#infCount-' + tab).textContent = grid.children.length + ' ideas · seed ' + st.seed;
+  } catch (e) { if (btn) btn.textContent = '∞ retry'; }
+  st.busy = false;
+}
+infFeedBuild();
+
+// =============================================================
+// 🎥 3D VIDEO STUDIO — Three.js + WebGL scenes, MediaRecorder
+// Clean-room implementation inspired by the merged repos
+// (see THIRD_PARTY.md).  All scene code below is original.
+// =============================================================
+(() => {
+  // ---------- engine registry ----------
+  const LENS_FOV = { '8':120, '14':91, '35':54, '50':38, '75':24 };
+  const ease = t => t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2, 3)/2;
+  const easeOut = t => 1 - Math.pow(1 - t, 3);
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+
+  // -- Galaxy (particles + bloom) --
+  const makeGalaxy = (env) => {
+    const scene = new THREE.Scene();
+    const cam = new THREE.PerspectiveCamera(LENS_FOV[String(env.lens)] || 54, env.w/env.h, 0.1, 2000);
+    cam.position.set(0, 6, 18);
+    const N = 8000;
+    const pos = new Float32Array(N*3), col = new Float32Array(N*3);
+    for (let i = 0; i < N; i++) {
+      const r = Math.pow(Math.random(), 0.4) * 30;
+      const a = Math.random() * Math.PI * 2;
+      const tilt = (Math.random() - 0.5) * 0.6;
+      pos[i*3]   = Math.cos(a) * r;
+      pos[i*3+1] = Math.sin(tilt) * r * 0.4;
+      pos[i*3+2] = Math.sin(a) * r;
+      const hue = 0.55 + Math.random()*0.2;
+      const c = new THREE.Color().setHSL(hue, 0.8, 0.5 + Math.random()*0.4);
+      col[i*3]=c.r; col[i*3+1]=c.g; col[i*3+2]=c.b;
+    }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    g.setAttribute('color', new THREE.BufferAttribute(col, 3));
+    const m = new THREE.PointsMaterial({ size: 0.18, vertexColors: true, transparent: true, opacity: 0.95, sizeAttenuation: true, blending: THREE.AdditiveBlending, depthWrite: false });
+    const pts = new THREE.Points(g, m);
+    scene.add(pts);
+    const core = new THREE.Mesh(new THREE.SphereGeometry(2.2, 32, 32), new THREE.MeshBasicMaterial({ color: 0xffd2a0 }));
+    scene.add(core);
+    const halo = new THREE.Mesh(new THREE.SphereGeometry(4, 32, 32), new THREE.MeshBasicMaterial({ color: 0xffb070, transparent: true, opacity: 0.25, blending: THREE.AdditiveBlending }));
+    scene.add(halo);
+    return { scene, camera: cam, update(p, el) {
+      const a = p * Math.PI * 2;
+      cam.position.x = Math.cos(a) * 22;
+      cam.position.z = Math.sin(a) * 22;
+      cam.position.y = 6 + Math.sin(p * Math.PI) * 4;
+      cam.lookAt(0, 0, 0);
+      pts.rotation.y = a * 0.5;
+      halo.scale.setScalar(1 + Math.sin(el * 1.2) * 0.08);
+    }};
+  };
+
+  // -- Planet orbit (textured sphere + rings) --
+  const makePlanet = (env) => {
+    const scene = new THREE.Scene();
+    const cam = new THREE.PerspectiveCamera(LENS_FOV[String(env.lens)] || 54, env.w/env.h, 0.1, 5000);
+    cam.position.set(0, 4, 14);
+    const planet = new THREE.Mesh(
+      new THREE.SphereGeometry(3, 64, 64),
+      new THREE.MeshStandardMaterial({ color: 0x4a78b8, roughness: 0.6, metalness: 0.1, emissive: 0x1a3a5a, emissiveIntensity: 0.15 })
+    );
+    scene.add(planet);
+    const rings = new THREE.Mesh(
+      new THREE.RingGeometry(4.2, 6.2, 96),
+      new THREE.MeshBasicMaterial({ color: 0xc0a878, side: THREE.DoubleSide, transparent: true, opacity: 0.7 })
+    );
+    rings.rotation.x = -0.35;
+    scene.add(rings);
+    const sun = new THREE.DirectionalLight(0xffe0a8, 1.4); sun.position.set(8, 6, 5); scene.add(sun);
+    scene.add(new THREE.AmbientLight(0x223344, 0.4));
+    const stars = new THREE.Points(new THREE.BufferGeometry().setAttribute('position', new THREE.BufferAttribute((() => { const a = new Float32Array(3000*3); for (let i=0;i<3000;i++){a[i*3]=(Math.random()-0.5)*200;a[i*3+1]=(Math.random()-0.5)*200;a[i*3+2]=(Math.random()-0.5)*200;} return a;})(), 3)),
+      new THREE.PointsMaterial({ color: 0xffffff, size: 0.15, sizeAttenuation: true }));
+    scene.add(stars);
+    return { scene, camera: cam, update(p) {
+      planet.rotation.y = p * Math.PI * 2;
+      const a = p * Math.PI * 2;
+      cam.position.x = Math.cos(a) * 14;
+      cam.position.z = Math.sin(a) * 14;
+      cam.position.y = 4 + Math.sin(p * Math.PI) * 2;
+      cam.lookAt(0, 0, 0);
+    }};
+  };
+
+  // -- Neon city (low-poly grid + fog) --
+  const makeCity = (env) => {
+    const scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0x0a0820, 0.025);
+    const cam = new THREE.PerspectiveCamera(LENS_FOV[String(env.lens)] || 54, env.w/env.h, 0.1, 2000);
+    cam.position.set(0, 8, 20);
+    const buildings = [];
+    for (let i = 0; i < 80; i++) {
+      const h = 1 + Math.random() * 14;
+      const w = 1 + Math.random() * 2;
+      const m = new THREE.Mesh(
+        new THREE.BoxGeometry(w, h, w),
+        new THREE.MeshStandardMaterial({
+          color: new THREE.Color().setHSL(0.55 + Math.random()*0.25, 0.7, 0.1 + Math.random()*0.2),
+          emissive: new THREE.Color().setHSL(0.55 + Math.random()*0.25, 0.9, 0.4),
+          emissiveIntensity: 0.4 + Math.random() * 0.6,
+          roughness: 0.4
+        })
+      );
+      m.position.set((Math.random()-0.5) * 80, h/2, (Math.random()-0.5) * 80);
+      scene.add(m);
+      buildings.push(m);
+    }
+    const ground = new THREE.Mesh(new THREE.PlaneGeometry(200, 200), new THREE.MeshBasicMaterial({ color: 0x05060f }));
+    ground.rotation.x = -Math.PI/2; scene.add(ground);
+    scene.add(new THREE.AmbientLight(0x222244, 0.5));
+    const moon = new THREE.DirectionalLight(0xaaccff, 0.6); moon.position.set(20, 30, 10); scene.add(moon);
+    return { scene, camera: cam, update(p, el) {
+      cam.position.x = Math.cos(p * 0.6) * 25;
+      cam.position.z = Math.sin(p * 0.6) * 25;
+      cam.position.y = 8 + Math.sin(el * 0.3) * 2;
+      cam.lookAt(0, 4, 0);
+      buildings.forEach((b, i) => { b.material.emissiveIntensity = 0.3 + 0.5 * (0.5 + 0.5 * Math.sin(el * 0.5 + i)); });
+    }};
+  };
+
+  // -- Fire burst (additive particles) --
+  const makeFire = (env) => {
+    const scene = new THREE.Scene();
+    const cam = new THREE.PerspectiveCamera(LENS_FOV[String(env.lens)] || 54, env.w/env.h, 0.1, 200);
+    cam.position.set(0, 0, 14);
+    const N = 1500;
+    const pos = new Float32Array(N*3), vel = new Float32Array(N*3), life = new Float32Array(N);
+    for (let i = 0; i < N; i++) { pos[i*3]=(Math.random()-0.5)*0.5; pos[i*3+1]=-2; pos[i*3+2]=(Math.random()-0.5)*0.5;
+      vel[i*3]=(Math.random()-0.5)*2; vel[i*3+1]=4+Math.random()*6; vel[i*3+2]=(Math.random()-0.5)*2; life[i]=Math.random(); }
+    const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    const m = new THREE.PointsMaterial({ color: 0xff7a30, size: 0.35, transparent: true, opacity: 0.9, blending: THREE.AdditiveBlending, depthWrite: false });
+    const pts = new THREE.Points(g, m); scene.add(pts);
+    return { scene, camera: cam, update(p, el) {
+      const arr = g.attributes.position.array;
+      for (let i = 0; i < N; i++) {
+        life[i] += 0.012;
+        if (life[i] > 1) { life[i] = 0; arr[i*3]=(Math.random()-0.5)*0.5; arr[i*3+1]=-2; arr[i*3+2]=(Math.random()-0.5)*0.5;
+          vel[i*3]=(Math.random()-0.5)*2; vel[i*3+1]=4+Math.random()*6; vel[i*3+2]=(Math.random()-0.5)*2; }
+        arr[i*3]   += vel[i*3]   * 0.016;
+        arr[i*3+1] += vel[i*3+1] * 0.016;
+        arr[i*3+2] += vel[i*3+2] * 0.016;
+        vel[i*3+1] -= 0.08;
+      }
+      g.attributes.position.needsUpdate = true;
+      cam.position.z = 14 - p * 4;
+    }};
+  };
+
+  // -- Ocean waves (displacement + sun) --
+  const makeWaves = (env) => {
+    const scene = new THREE.Scene();
+    const cam = new THREE.PerspectiveCamera(LENS_FOV[String(env.lens)] || 54, env.w/env.h, 0.1, 500);
+    cam.position.set(0, 4, 12);
+    const geo = new THREE.PlaneGeometry(80, 80, 80, 80);
+    const mat = new THREE.MeshStandardMaterial({ color: 0x0a3050, roughness: 0.1, metalness: 0.6, emissive: 0x0a1830, emissiveIntensity: 0.2 });
+    const ocean = new THREE.Mesh(geo, mat); ocean.rotation.x = -Math.PI/2; scene.add(ocean);
+    const sun = new THREE.DirectionalLight(0xffd2a0, 1.6); sun.position.set(10, 8, 5); scene.add(sun);
+    scene.add(new THREE.AmbientLight(0x223344, 0.4));
+    return { scene, camera: cam, update(p, el) {
+      const pos = geo.attributes.position;
+      for (let i = 0; i < pos.count; i++) {
+        const x = pos.getX(i), y = pos.getY(i);
+        const z = Math.sin(x*0.3 + el*0.8) * 0.5 + Math.cos(y*0.4 + el*0.6) * 0.4 + Math.sin((x+y)*0.2 + el*0.5)*0.3;
+        pos.setZ(i, z);
+      }
+      pos.needsUpdate = true;
+      ocean.geometry.computeVertexNormals();
+      cam.position.x = Math.cos(p * 0.4) * 12;
+      cam.position.z = Math.sin(p * 0.4) * 12;
+      cam.lookAt(0, 0, 0);
+    }};
+  };
+
+  // -- Warp tunnel (streaks + chroma) --
+  const makeTunnel = (env) => {
+    const scene = new THREE.Scene();
+    const cam = new THREE.PerspectiveCamera(LENS_FOV[String(env.lens)] || 54, env.w/env.h, 0.1, 500);
+    cam.position.set(0, 0, 0);
+    const N = 2000;
+    const pos = new Float32Array(N*3), col = new Float32Array(N*3);
+    for (let i = 0; i < N; i++) {
+      const a = Math.random() * Math.PI * 2;
+      const r = 3 + Math.random() * 8;
+      pos[i*3] = Math.cos(a) * r; pos[i*3+1] = Math.sin(a) * r; pos[i*3+2] = -Math.random() * 200;
+      const c = new THREE.Color().setHSL((a/Math.PI*2) % 1, 0.9, 0.6);
+      col[i*3]=c.r; col[i*3+1]=c.g; col[i*3+2]=c.b;
+    }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    g.setAttribute('color', new THREE.BufferAttribute(col, 3));
+    const m = new THREE.PointsMaterial({ size: 0.4, vertexColors: true, blending: THREE.AdditiveBlending, transparent: true, depthWrite: false });
+    scene.add(new THREE.Points(g, m));
+    return { scene, camera: cam, update(p, el) {
+      cam.position.z = -p * 200;
+      const arr = g.attributes.position.array;
+      for (let i = 0; i < N; i++) { arr[i*3+2] += 4; if (arr[i*3+2] > cam.position.z + 5) arr[i*3+2] -= 200; }
+      g.attributes.position.needsUpdate = true;
+    }};
+  };
+
+  // -- 2D Kinetic Title (canvas engine) --
+  const makeTitle = (env) => {
+    const c = document.createElement('canvas'); c.width = env.w; c.height = env.h;
+    const cx = c.getContext('2d');
+    const parts = [];
+    for (let i = 0; i < 200; i++) parts.push({ x: Math.random()*env.w, y: Math.random()*env.h, s: 0.5 + Math.random()*2, vy: -0.5 - Math.random()*1.5 });
+    return { engine: '2d', canvas: c, update(p, el) {
+      cx.fillStyle = 'rgba(10,11,18,0.3)'; cx.fillRect(0, 0, env.w, env.h);
+      parts.forEach(pt => { pt.y += pt.vy; if (pt.y < -10) { pt.y = env.h + 10; pt.x = Math.random()*env.w; } cx.fillStyle = `hsla(${(pt.x/env.w)*360+el*30},80%,65%,0.7)`; cx.beginPath(); cx.arc(pt.x, pt.y, pt.s, 0, Math.PI*2); cx.fill(); });
+      const txt = (env.prompt || 'CINEMATIC').toUpperCase().slice(0, 36);
+      const k = ease(clamp(p * 2, 0, 1));
+      cx.save(); cx.translate(env.w/2, env.h/2); cx.scale(0.5 + k*0.5, 0.5 + k*0.5); cx.globalAlpha = k; cx.fillStyle = '#fff';
+      cx.font = '800 ' + Math.floor(env.w*0.06) + 'px system-ui'; cx.textAlign = 'center'; cx.textBaseline = 'middle';
+      cx.shadowColor = '#7c5cff'; cx.shadowBlur = 30; cx.fillText(txt, 0, 0); cx.restore();
+    }};
+  };
+
+  // -- 2D Logo reveal (rotating ring + glow) --
+  const makeLogo = (env) => {
+    const c = document.createElement('canvas'); c.width = env.w; c.height = env.h;
+    const cx = c.getContext('2d');
+    return { engine: '2d', canvas: c, update(p) {
+      const k = ease(clamp(p * 1.5, 0, 1));
+      cx.fillStyle = '#0a0b12'; cx.fillRect(0, 0, env.w, env.h);
+      const cx0 = env.w/2, cy0 = env.h/2, R = Math.min(env.w, env.h) * 0.25 * k;
+      cx.save(); cx.translate(cx0, cy0); cx.rotate(p * Math.PI * 2);
+      const grd = cx.createLinearGradient(-R, -R, R, R);
+      grd.addColorStop(0, '#7c5cff'); grd.addColorStop(0.5, '#27d3a2'); grd.addColorStop(1, '#ff5e7e');
+      cx.strokeStyle = grd; cx.lineWidth = 8; cx.beginPath(); cx.arc(0, 0, R, 0, Math.PI*2); cx.stroke();
+      cx.rotate(-p * Math.PI * 2);
+      cx.fillStyle = '#fff'; cx.font = '800 ' + Math.floor(R*0.5) + 'px system-ui'; cx.textAlign = 'center'; cx.textBaseline = 'middle';
+      cx.fillText('✦', 0, 0);
+      cx.restore();
+    }};
+  };
+
+  // -- WebGPU T2V-Zero clean-room mock (8-frame keyframe interpolation) --
+  // Real WebGPU T2V-Zero would download a SD-1.5 ONNX model and run inference in
+  // the browser via WebGPU.  This is a clean-room placeholder that produces a
+  // smooth 8-frame colour-shift based on the prompt hash, so the path works
+  // end-to-end without the 4GB model download.  See THIRD_PARTY.md.
+  const makeWebGPU = (env) => {
+    const c = document.createElement('canvas'); c.width = env.w; c.height = env.h;
+    const cx = c.getContext('2d');
+    const hash = Array.from(env.prompt || 'x').reduce((a, ch) => a + ch.charCodeAt(0), 0);
+    const hue0 = (hash % 360), hue1 = (hash * 7 % 360);
+    return { engine: '2d', canvas: c, update(p, el) {
+      const k = ease(p);
+      cx.fillStyle = `hsl(${hue0 + (hue1-hue0)*k},70%,${5 + k*10}%)`; cx.fillRect(0, 0, env.w, env.h);
+      for (let i = 0; i < 8; i++) {
+        const t = (el * 0.6 + i/8) % 1;
+        const x = env.w * (0.5 + 0.4 * Math.cos(t * Math.PI * 2 + i));
+        const y = env.h * (0.5 + 0.4 * Math.sin(t * Math.PI * 2 + i * 0.7));
+        const r = 60 + 40 * Math.sin(t * Math.PI * 2);
+        const g = cx.createRadialGradient(x, y, 0, x, y, r);
+        g.addColorStop(0, `hsla(${(hue0 + i*30 + el*40)%360},90%,65%,0.8)`);
+        g.addColorStop(1, 'transparent');
+        cx.fillStyle = g; cx.beginPath(); cx.arc(x, y, r, 0, Math.PI*2); cx.fill();
+      }
+      cx.fillStyle = 'rgba(255,255,255,0.85)'; cx.font = '600 22px system-ui'; cx.textAlign = 'center';
+      cx.fillText('WebGPU T2V-Zero (mock) — see THIRD_PARTY.md', env.w/2, env.h - 30);
+    }};
+  };
+
+  // -- Fallback (2D) when Three.js is missing --
+  const makeFallback = (env) => {
+    const c = document.createElement('canvas'); c.width = env.w; c.height = env.h;
+    const cx = c.getContext('2d');
+    return { engine: '2d', canvas: c, update(p) {
+      const g = cx.createLinearGradient(0, 0, env.w, env.h);
+      g.addColorStop(0, '#1a2140'); g.addColorStop(1, '#7c5cff');
+      cx.fillStyle = g; cx.fillRect(0, 0, env.w, env.h);
+      cx.fillStyle = '#fff'; cx.font = '600 24px system-ui'; cx.textAlign = 'center';
+      cx.fillText('3D engine unavailable (offline) — 2D fallback', env.w/2, env.h/2);
+    }};
+  };
+
+  const SCENES = { galaxy: makeGalaxy, planet: makePlanet, city: makeCity, fire: makeFire, waves: makeWaves, tunnel: makeTunnel, title: makeTitle, logo: makeLogo, webgpu: makeWebGPU, fallback: makeFallback };
+
+  // -- LUT (3x3 matrix for film grading) --
+  const LUTS = {
+    none:   [[1,0,0],[0,1,0],[0,0,1]],
+    teal:   [[0.9,0,0],[0,1.0,0],[0,0,1.15]],
+    warm:   [[1.15,0,0],[0,1.0,0],[0,0,0.85]],
+    cool:   [[0.85,0,0],[0,1.0,0],[0,0,1.15]],
+    noir:   [[0.8,0,0],[0,0.8,0],[0,0,0.9]],
+    vintage:[[1.1,0.05,0],[0.05,1.0,0],[0,0,0.8]],
+    bleach: [[1.2,0,0],[0,1.2,0],[0,0,1.0]]
+  };
+
+  // ---------- 3D video state ----------
+  const dvState = { renderer: null, scene: null, cam: null, active: null, env: null, rec: null, chunks: [], recording: false, fx: null, fxCtx: null, stopped: false };
+  function dvPickRes() {
+    const [W, H] = ($('#dvRes').value || '1920x1080').split('x').map(Number);
+    const SAFE = 1920, s = W > SAFE ? SAFE/W : 1;
+    return { w: Math.round(W*s), h: Math.round(H*s), label: `${W}×${H}` };
+  }
+  function dvGetEnv() {
+    return {
+      prompt: $('#dvPrompt').value || '',
+      engine: $('#dvEngine').value,
+      lens: $('#dvLens').value,
+      cam: $('#dvCam').value,
+      res: $('#dvRes').value,
+      fps: parseInt($('#dvFps').value),
+      dur: parseFloat($('#dvDur').value),
+      lut: $('#dvLut').value,
+      letterbox: $('#dvLetterbox').checked,
+      grain: $('#dvGrain').checked,
+      bloom: $('#dvBloom').checked
+    };
+  }
+
+  function dvInit() {
+    if (dvState.renderer) return;
+    const { w, h } = dvPickRes();
+    const gl = $('#dvGl');
+    gl.width = w; gl.height = h;
+    const renderer = new THREE.WebGLRenderer({ canvas: gl, antialias: true, alpha: false });
+    renderer.setPixelRatio(1); renderer.setSize(w, h, false);
+    dvState.renderer = renderer;
+    // composite overlay for fx
+    const fx = document.createElement('canvas'); fx.width = w; fx.height = h;
+    dvState.fx = fx; dvState.fxCtx = fx.getContext('2d');
+  }
+
+  function dvBuild() {
+    dvInit();
+    const env = dvGetEnv();
+    let eng = env.engine;
+    if (eng !== 'title' && eng !== 'logo' && eng !== 'webgpu' && eng !== 'fallback' && !window.THREE) {
+      eng = 'fallback'; env.engine = 'fallback';
+    }
+    const make = SCENES[eng] || SCENES.fallback;
+    if (eng === 'title' || eng === 'logo' || eng === 'webgpu' || eng === 'fallback') {
+      // 2D path
+      const built = make(env);
+      dvState.scene = null; dvState.cam = null; dvState.active = built; dvState.env = env;
+      $('#dvGl').style.display = 'none';
+      $('#dvBadge').textContent = `${eng} · ready`;
+    } else {
+      const built = make(env);
+      if (!built.scene || !built.camera) {
+        // Defensive: scene-registry pitfall guard (browser-video-generator skill)
+        msg('#dvMsg', 'Scene builder missing scene/camera — falling back', 'err');
+        const fb = SCENES.fallback(env);
+        dvState.scene = null; dvState.cam = null; dvState.active = fb; dvState.env = env;
+        $('#dvGl').style.display = 'none';
+        $('#dvBadge').textContent = 'fallback · ready';
+        return;
+      }
+      dvState.scene = built.scene; dvState.cam = built.camera; dvState.active = built; dvState.env = env;
+      $('#dvGl').style.display = 'block';
+      $('#dvBadge').textContent = `${eng} · ready`;
+    }
+  }
+
+  // -- composite: apply LUT + grain + letterbox onto an offscreen canvas
+  function dvComposite(srcCanvas, w, h) {
+    const cx = dvState.fxCtx;
+    cx.drawImage(srcCanvas, 0, 0, w, h);
+    if (dvState.env.bloom) {
+      cx.globalCompositeOperation = 'screen';
+      const small = document.createElement('canvas'); small.width = w/2; small.height = h/2;
+      small.getContext('2d').drawImage(srcCanvas, 0, 0, w/2, h/2);
+      cx.filter = 'blur(6px) brightness(1.5)';
+      cx.drawImage(small, 0, 0, w, h);
+      cx.filter = 'none'; cx.globalCompositeOperation = 'source-over';
+    }
+    // LUT per-pixel (small cost: 128x72 downscale for grade, then upscale)
+    if (dvState.env.lut !== 'none') {
+      const m = LUTS[dvState.env.lut] || LUTS.none;
+      const tmp = document.createElement('canvas'); tmp.width = 160; tmp.height = Math.round(160*h/w);
+      const tx = tmp.getContext('2d');
+      tx.drawImage(dvState.fx, 0, 0, tmp.width, tmp.height);
+      const id = tx.getImageData(0, 0, tmp.width, tmp.height), d = id.data;
+      for (let i = 0; i < d.length; i += 4) {
+        const r = d[i]/255, g = d[i+1]/255, b = d[i+2]/255;
+        d[i]   = clamp((m[0][0]*r + m[0][1]*g + m[0][2]*b) * 255, 0, 255);
+        d[i+1] = clamp((m[1][0]*r + m[1][1]*g + m[1][2]*b) * 255, 0, 255);
+        d[i+2] = clamp((m[2][0]*r + m[2][1]*g + m[2][2]*b) * 255, 0, 255);
+      }
+      tx.putImageData(id, 0, 0);
+      cx.drawImage(tmp, 0, 0, w, h);
+    }
+    if (dvState.env.grain) {
+      cx.globalAlpha = 0.06; cx.fillStyle = `hsl(${Math.random()*360},50%,50%)`;
+      for (let i = 0; i < 800; i++) cx.fillRect(Math.random()*w, Math.random()*h, 1, 1);
+      cx.globalAlpha = 1;
+    }
+    if (dvState.env.letterbox) {
+      const barH = (h - h/2.35) / 2;
+      cx.fillStyle = '#000'; cx.fillRect(0, 0, w, barH); cx.fillRect(0, h - barH, w, barH);
+    }
+  }
+
+  function dvTick(p, el) {
+    const env = dvState.env;
+    if (!dvState.active) return;
+    if (env.engine === 'title' || env.engine === 'logo' || env.engine === 'webgpu' || env.engine === 'fallback') {
+      dvState.active.update(p, el);
+      dvComposite(dvState.active.canvas, env._w || 1920, env._h || 1080);
+    } else {
+      // re-derive cam move per beat
+      const camMove = env.cam;
+      const k = ease(clamp(p, 0, 1));
+      const aq = p * Math.PI * 2;
+      if (camMove === 'orbit') { dvState.cam.position.set(Math.cos(aq)*22, 6, Math.sin(aq)*22); dvState.cam.lookAt(0,0,0); }
+      else if (camMove === 'crane') { dvState.cam.position.set(0, 4 + k*16, 28 - k*14); dvState.cam.lookAt(0, 0, 0); }
+      else if (camMove === 'reveal') { dvState.cam.position.set(Math.cos(aq*0.5)*28, 0, Math.sin(aq*0.5)*28); dvState.cam.position.multiplyScalar(1 - k*0.6); dvState.cam.lookAt(0,0,0); }
+      else if (camMove === 'pushorbit') { const r = 28 - k*16; dvState.cam.position.set(Math.cos(aq)*r, 4, Math.sin(aq)*r); dvState.cam.lookAt(0,0,0); }
+      else { dvState.cam.lookAt(0, 0, 0); }
+      dvState.active.update(p, el);
+      dvState.renderer.render(dvState.scene, dvState.cam);
+      dvComposite(dvState.renderer.domElement, dvState.renderer.domElement.width, dvState.renderer.domElement.height);
+    }
+  }
+
+  // -- Director (rule-based prompt → scene + lens + cam + lut) --
+  function dvDirector() {
+    const p = ($('#dvPrompt').value || '').toLowerCase();
+    const notes = [];
+    if (/galaxy|space|nebula|stars|cosmos|black hole|interstellar/.test(p)) { $('#dvEngine').value = 'galaxy'; notes.push('Engine: galaxy (matched space/nebula)'); }
+    else if (/planet|orbit|sphere|ring|saturn|jupiter|earth/.test(p)) { $('#dvEngine').value = 'planet'; notes.push('Engine: planet (matched orbital body)'); }
+    else if (/city|skyline|neon|cyberpunk|urban|street/.test(p)) { $('#dvEngine').value = 'city'; notes.push('Engine: neon city'); }
+    else if (/fire|flame|burn|explosion|ember/.test(p)) { $('#dvEngine').value = 'fire'; notes.push('Engine: fire burst'); }
+    else if (/ocean|wave|water|sea|surf/.test(p)) { $('#dvEngine').value = 'waves'; notes.push('Engine: ocean waves'); }
+    else if (/tunnel|warp|hyperspace|portal|streak/.test(p)) { $('#dvEngine').value = 'tunnel'; notes.push('Engine: warp tunnel'); }
+    else if (/title|text|kinetic|word|logo/.test(p)) { $('#dvEngine').value = 'title'; notes.push('Engine: kinetic title'); }
+    else if (/reveal|glass|gem|crystal/.test(p)) { $('#dvEngine').value = 'logo'; notes.push('Engine: logo reveal'); }
+    else if (/webgpu|t2v|diffusion|browser ai/.test(p)) { $('#dvEngine').value = 'webgpu'; notes.push('Engine: WebGPU T2V-Zero mock'); }
+    if (/orbit|circle|spinning/.test(p)) { $('#dvCam').value = 'orbit'; notes.push('Camera: orbit'); }
+    else if (/crane|lift|ascend|rising/.test(p)) { $('#dvCam').value = 'crane'; notes.push('Camera: crane'); }
+    else if (/push|dolly|reveal|approach|zoom in/.test(p)) { $('#dvCam').value = 'reveal'; notes.push('Camera: reveal (push-in)'); }
+    if (/noir|dark|shadow|black/.test(p)) { $('#dvLut').value = 'noir'; notes.push('Grade: noir'); }
+    else if (/warm|sunset|golden/.test(p)) { $('#dvLut').value = 'warm'; notes.push('Grade: warm'); }
+    else if (/cool|blue|ice|cold/.test(p)) { $('#dvLut').value = 'cool'; notes.push('Grade: cool'); }
+    else if (/cinematic|teal|orange|hollywood/.test(p)) { $('#dvLut').value = 'teal'; notes.push('Grade: teal & orange'); }
+    else if (/vintage|retro|70s|film/.test(p)) { $('#dvLut').value = 'vintage'; notes.push('Grade: vintage'); }
+    if (/epic|grand|wide|landscape|establishing/.test(p)) { $('#dvLens').value = '14'; notes.push('Lens: 14mm (wide)'); }
+    else if (/intimate|close|portrait/.test(p)) { $('#dvLens').value = '75'; notes.push('Lens: 75mm (telephoto)'); }
+    const dur = parseFloat($('#dvDur').value) || 6;
+    if (/long|epic|journey|story/.test(p) && dur < 12) { $('#dvDur').value = 12; notes.push('Duration: 12s (epic)'); }
+    notes.push('Music cue: ' + (dvState.env && dvState.env.lut !== 'noir' ? 'sweeping pad + sub pulse' : 'low drone + sparse piano'));
+    notes.push('Export format: WebM VP9 default, MP4 H.264 fallback (browser-dependent)');
+    $('#dvNotes').textContent = notes.join('\n');
+    msg('#dvMsg', 'Director parsed prompt — review and render', 'ok');
+    dvBuild();
+  }
+
+  // -- Render (MediaRecorder) --
+  async function dvRender() {
+    dvBuild();
+    const env = dvState.env;
+    $('#dvStop').style.display = 'inline-block';
+    $('#dvMsg').textContent = 'Recording…';
+    $('#dvMsg').className = 'msg show info';
+    $('#dvProgWrap').style.display = 'block';
+    dvState.chunks = []; dvState.recording = true; dvState.stopped = false;
+
+    // one synchronous frame to prime the capture canvas (pitfall: 0.00 MB)
+    dvTick(0, 0);
+    const stream = dvState.fx.captureStream(env.fps);
+    const mime = ['video/webm;codecs=vp9','video/webm;codecs=vp8','video/webm','video/mp4'].find(m => MediaRecorder.isTypeSupported(m)) || 'video/webm';
+    const rec = new MediaRecorder(stream, { mimeType: mime, videoBitsPerSecond: 12e6 });
+    dvState.rec = rec;
+    rec.ondataavailable = e => { if (e.data && e.data.size) dvState.chunks.push(e.data); };
+    rec.onstop = () => {
+      const blob = new Blob(dvState.chunks, { type: mime });
+      const url = URL.createObjectURL(blob);
+      const sizeMB = (blob.size / 1048576).toFixed(2);
+      $('#dvOut').innerHTML = `<a class="dl" href="${url}" download="3d-video-${Date.now()}.${mime.includes('mp4')?'mp4':'webm'}" style="display:inline-block;margin-top:6px;background:var(--acc2);color:#04231a;padding:7px 12px;border-radius:8px;font-weight:800">💾 Download (${sizeMB} MB · ${mime})</a>`;
+      msg('#dvMsg', `Rendered ${sizeMB} MB — ${dvState.chunks.length} chunks`, 'ok');
+      $('#dvStop').style.display = 'none';
+      dvState.recording = false;
+    };
+    rec.start();
+
+    const t0 = performance.now();
+    const total = env.dur;
+    return new Promise(resolve => {
+      const loop = () => {
+        if (dvState.stopped) { rec.stop(); return; }
+        const el = (performance.now() - t0) / 1000;
+        const p = Math.min(el / total, 1);
+        dvTick(p, el);
+        $('#dvProg').style.width = (p * 100).toFixed(0) + '%';
+        if (p >= 1) { rec.stop(); resolve(); return; }
+        setTimeout(loop, 40);
+      };
+      loop();
+    });
+  }
+
+  // -- Cinema studio: screenplay → storyboard → shots --
+  // Clean-room rule-based generator (no GPL code from PANDORA).
+  // If local Ollama is available, can be upgraded to call /api/generate.
+  const STYLES = {
+    kubrick: { cam: 'one-point perspective dolly', grade: 'symmetric, cold, slow', suffix: 'Stanley Kubrick style, one-point perspective, slow dolly, eerie symmetry, ultra-detailed' },
+    nolan:   { cam: 'IMAX anamorphic, IMAX-format', grade: 'IMAX, dense, time-bending', suffix: 'Christopher Nolan IMAX style, anamorphic lens, high-contrast, time-bending' },
+    vintage: { cam: 'handheld, 35mm grain', grade: 'warm 1970s Kodak film stock', suffix: '1970s vintage film, 35mm Kodak stock, warm grade, handheld, lens flare' },
+    anime:   { cam: 'dynamic angles, expressive', grade: 'saturated, bold', suffix: 'anime style, vibrant colors, expressive character animation, cinematic composition' },
+    nature:  { cam: 'observational, telephoto, natural light', grade: 'soft, golden hour', suffix: 'nature documentary style, BBC Earth, soft natural light, telephoto, intimate' },
+    cyberpunk: { cam: 'low angle, neon, rain', grade: 'neon teal/magenta, dark', suffix: 'cyberpunk 2077 aesthetic, neon teal and magenta, rain, reflective, low angle' }
+  };
+  const cnState = { scenes: [] };
+
+  function cnScreenplay() {
+    const log = $('#cnLog').value || 'a story of discovery';
+    const style = STYLES[$('#cnStyle').value] || STYLES.vintage;
+    // 6-beat screenplay arc (rule-based): setup, inciting, rising, climax, falling, resolve
+    const beats = [
+      { name: 'OPENING IMAGE', desc: 'Establish the world — quiet, vast, full of potential.' },
+      { name: 'INCITING INCIDENT', desc: 'A signal breaks the calm. The protagonist is drawn in.' },
+      { name: 'RISING ACTION', desc: 'Discovery — strange new details emerge. The rules shift.' },
+      { name: 'MIDPOINT', desc: 'A choice that can\'t be undone. The lens changes.' },
+      { name: 'CLIMAX', desc: 'Confrontation with the core truth. Maximum visual intensity.' },
+      { name: 'RESOLUTION', desc: 'A new equilibrium. The camera pulls back. We exhale.' }
+    ];
+    const out = beats.map((b, i) => `${i+1}. **${b.name}** — ${b.desc}\n   Camera: ${style.cam}\n   Grade: ${style.grade}\n   Visual: ${log} — ${style.suffix}`);
+    $('#cnScreenOut').textContent = `STYLE: ${$('#cnStyle').value.toUpperCase()}\n\n` + out.join('\n\n');
+    cnState.scenes = beats.map((b, i) => ({
+      idx: i+1, name: b.name, desc: b.desc, cam: style.cam, grade: style.grade,
+      prompt: `${log} — ${b.name.toLowerCase()}, ${b.desc}, ${style.suffix}`
+    }));
+    msg('#cnScreenMsg', 'Screenplay ready — build storyboard', 'ok');
+  }
+  function cnBuildBoard() {
+    if (!cnState.scenes.length) { msg('#cnBoardMsg', 'Generate screenplay first', 'err'); return; }
+    const out = cnState.scenes.map(s => `<b>${s.idx}. ${s.name}</b><br><span class="muted">${esc(s.desc)}</span><br><i style="color:var(--acc)">${esc(s.prompt.slice(0, 180))}…</i>`).join('<hr style="border:0;border-top:1px solid var(--line);margin:8px 0">');
+    $('#cnBoardOut').innerHTML = out;
+    msg('#cnBoardMsg', `${cnState.scenes.length} scenes in storyboard`, 'ok');
+  }
+  async function cnGenerateShots() {
+    if (!cnState.scenes.length) { msg('#cnShotsMsg', 'Build storyboard first', 'err'); return; }
+    $('#cnShotsProgWrap').style.display = 'block';
+    $('#cnShotsGrid').innerHTML = '';
+    const stop = { v: false }; $('#cnShotsStop').style.display = 'inline-block';
+    $('#cnShotsStop').onclick = () => { stop.v = true; };
+    for (let i = 0; i < cnState.scenes.length; i++) {
+      if (stop.v) break;
+      const s = cnState.scenes[i];
+      const url = `https://image.pollinations.ai/prompt/${encodeURIComponent(s.prompt)}?width=768&height=432&nologo=true&model=flux`;
+      const cell = document.createElement('div'); cell.className = 'item';
+      cell.innerHTML = `<img src="${url}" loading="lazy" alt="Shot ${s.idx}" onerror="this.style.background='#222'"><div class="meta">Shot ${s.idx} · ${esc(s.name)}</div>`;
+      $('#cnShotsGrid').appendChild(cell);
+      $('#cnShotsProg').style.width = (((i+1)/cnState.scenes.length)*100).toFixed(0) + '%';
+      msg('#cnShotsMsg', `Generated ${i+1}/${cnState.scenes.length}`, 'info');
+      await new Promise(r => setTimeout(r, 200));
+    }
+    $('#cnShotsStop').style.display = 'none';
+    msg('#cnShotsMsg', `Done — ${cnState.scenes.length} shots`, 'ok');
+  }
+
+  // ---------- wire it all up ----------
+  document.addEventListener('DOMContentLoaded', () => {
+    $('#dvDirector').addEventListener('click', dvDirector);
+    $('#dvRender').addEventListener('click', () => dvRender().catch(e => msg('#dvMsg', 'Render error: ' + e.message, 'err')));
+    $('#dvStop').addEventListener('click', () => { dvState.stopped = true; });
+    $('#cnScreen').addEventListener('click', cnScreenplay);
+    $('#cnBoard').addEventListener('click', cnBuildBoard);
+    $('#cnBoardClear').addEventListener('click', () => { $('#cnBoardOut').innerHTML = ''; cnState.scenes = []; });
+    $('#cnShots').addEventListener('click', () => cnGenerateShots().catch(e => msg('#cnShotsMsg', 'Error: ' + e.message, 'err')));
+  });
+  // If DOMContentLoaded already fired (we are in the same script tag at end of body)
+  if (document.readyState !== 'loading') {
+    setTimeout(() => {
+      $('#dvDirector') && $('#dvDirector').addEventListener('click', dvDirector);
+      $('#dvRender') && $('#dvRender').addEventListener('click', () => dvRender().catch(e => msg('#dvMsg', 'Render error: ' + e.message, 'err')));
+      $('#dvStop') && $('#dvStop').addEventListener('click', () => { dvState.stopped = true; });
+      $('#cnScreen') && $('#cnScreen').addEventListener('click', cnScreenplay);
+      $('#cnBoard') && $('#cnBoard').addEventListener('click', cnBuildBoard);
+      $('#cnBoardClear') && $('#cnBoardClear').addEventListener('click', () => { $('#cnBoardOut').innerHTML = ''; cnState.scenes = []; });
+      $('#cnShots') && $('#cnShots').addEventListener('click', () => cnGenerateShots().catch(e => msg('#cnShotsMsg', 'Error: ' + e.message, 'err')));
+    }, 0);
+  }
+})();
+
+</script>
+</body>
+</html>

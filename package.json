@@ -1,0 +1,35 @@
+{
+  "name": "prompt-to-3d-video",
+  "version": "1.0.0",
+  "description": "One prompt. 9 scene engines. Real MP4 / WebM output. Zero API keys. A merged, keyless, browser-first video studio with 3D WebGL path and cinema pre-production pipeline. Clean-room merger of multiple open-source projects (see THIRD_PARTY.md).",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "verify": "node verify.js"
+  },
+  "keywords": [
+    "video-generator",
+    "prompt-to-video",
+    "text-to-video",
+    "3d-video",
+    "cinematic",
+    "webgl",
+    "three.js",
+    "mediarecorder",
+    "t2v-zero",
+    "webgpu",
+    "ai-video",
+    "no-api-key",
+    "open-source",
+    "ollama",
+    "pollinations",
+    "flux"
+  ],
+  "author": "kalubhalu141-bit",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {}
+}
