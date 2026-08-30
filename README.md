@@ -170,7 +170,7 @@ node server.js
 You can wire any of the Cinema Studio buttons to call Ollama via
 `POST /api/generate`. The rule-based version is the offline default.
 
-## 🎞 Hooking a real local T2V model (Wan 2.2 / LTX-Video / HunyuanVideo / Open-Sora)
+## 🎞 Hooking a real local T2V model
 
 The 🎥 3D Video tab ships with **procedural Three.js / 2D scenes** that
 synthesise motion from a prompt. If you have the GPU and want **real
@@ -179,22 +179,40 @@ and pipe its output into this app's MediaRecorder / ffmpeg export stage.
 
 | Model | Stars | License | VRAM | Best for |
 |---|---|---|---|---|
-| **Wan 2.2** (5B) | 3.5k | Apache-2.0 | 24 GB (4090) | Cinematic T2V/I2V @ 720p 24fps |
-| **LTX-Video** (10B) | 5k | Apache-2.0 | 12–24 GB | Real-time fast iteration |
+| **Pixelle-Video** | 27k | Apache-2.0 | varies | Fully-automated short-video engine |
+| **VideoLingo** | 18k | Apache-2.0 | 8 GB | Netflix-level subtitle cutting + translation |
+| **FramePack** | 17k | Apache-2.0 | 6 GB | Practical video diffusion, next-frame packing |
+| **CogVideo / CogVideoX** | 13k | Apache-2.0 | 12–24 GB | T2V/I2V from Zhipu AI |
+| **video-subtitle-remover** | 12.6k | Apache-2.0 | 4–8 GB | Inpaint hard subtitles out of any video |
+| **LTX-Video** | 11k | Apache-2.0 | 12–24 GB | Real-time fast iteration on 4090 |
+| **video-subtitle-extractor** | 9.4k | Apache-2.0 | 4 GB | Hard-subtitle → SRT |
+| **Hallo** (Fudan) | 8.7k | MIT | 12 GB | Audio-driven portrait animation |
+| **InfiniteTalk** | 7.7k | Apache-2.0 | 24 GB | Unlimited-length talking video |
+| **video-retalking** | 7.3k | Apache-2.0 | 8 GB | Lip-sync to new audio |
+| **video-shotcraft** | 6.7k | Apache-2.0 | varies | AI video skill for coding agents |
 | **Open-Sora** (11B) | 29k | Apache-2.0 | 24+ GB | Highest-quality open T2V |
+| **Wan 2.2** (5B) | 3.5k | Apache-2.0 | 24 GB (4090) | Cinematic T2V/I2V @ 720p 24fps |
+| **TurboDiffusion** | 3.6k | Apache-2.0 | 24+ GB | 100–200× faster video diffusion |
+| **Stable Video Infinity** | 2.6k | Apache-2.0 | 24+ GB | Infinite-length T2V (ICLR 2026) |
 | **HunyuanVideo** (13B) | 4.5k | Tencent Community | 24+ GB | Tencent's flagship (territory restrictions) |
 | **AnimateDiff** | 12k | Apache-2.0 | 12 GB | Animate any SD-1.5 checkpoint |
+| **Champ** | 4.3k | MIT | 12 GB | Controllable human image animation |
+| **First Order Model** | 15k | MIT | 4–8 GB | Image animation via motion transfer |
 | **StableAnimator** | 1.4k | MIT | 12+ GB | Pose-driven human animation |
+| **html-video** (nexu-io) | 4.5k | Apache-2.0 | 0 | HTML → video for coding agents |
 
-All six are listed in `THIRD_PARTY.md` with full license terms and a
+All are listed in `THIRD_PARTY.md` with full license terms and the exact
 "Wan 2.2 → render to `out/clips/scene1.mp4` → ffmpeg into `out/film.mp4`"
-recipe. To integrate one of them with this app, run its inference CLI
-and then either:
+recipe. To integrate one with this app, run its inference CLI and then
+either:
 
 - Drop the resulting MP4 into a `clips/` folder, and use the existing
   🎥 3D Video tab's MediaRecorder path to add LUTs / grain / letterbox.
 - Or open the file in any video editor and use the 🎬 Cinema Studio's
   per-shot FLUX keyframes as a storyboard reference.
+- For **subtitles**: VideoLingo / video-subtitle-remover / video-subtitle-extractor
+  give you Netflix-quality cut + translate + extract / remove pipelines that
+  pair perfectly with the in-browser render.
 
 The local models listed above are **not bundled** in this repo — they're
 multi-GB and would break the keyless-instant-install promise. They're
@@ -221,23 +239,31 @@ MIT. See [`LICENSE`](LICENSE) and [`THIRD_PARTY.md`](THIRD_PARTY.md).
 
 ## 🙏 Credits
 
-The merged open-source inspirations (every one cited with license in `THIRD_PARTY.md`):
+This project is a **clean-room merger** of the strongest free, permissively-licensed
+open-source video / film / VFX projects on GitHub. Every one is cited with its
+license in [`THIRD_PARTY.md`](THIRD_PARTY.md). Categories:
 
-**Foundation models (T2V / I2V)**
-- [AnimateDiff](https://github.com/guoyww/AnimateDiff) · [Wan 2.2](https://github.com/Wan-Video/Wan2.2) · [LTX-Video](https://github.com/Lightricks/LTX-Video) · [Open-Sora](https://github.com/hpcaitech/Open-Sora) — all Apache-2.0
+**Foundation models (T2V / I2V)** — Apache-2.0 unless noted
+- [AnimateDiff](https://github.com/guoyww/AnimateDiff) · [Wan 2.2](https://github.com/Wan-Video/Wan2.2) · [LTX-Video](https://github.com/Lightricks/LTX-Video) · [Open-Sora](https://github.com/hpcaitech/Open-Sora) · [CogVideo](https://github.com/zai-org/CogVideo) · [FramePack](https://github.com/lllyasviel/FramePack) · [TurboDiffusion](https://github.com/thu-ml/TurboDiffusion) · [Pixelle-Video](https://github.com/ATH-MaaS/Pixelle-Video)
 - [HunyuanVideo](https://github.com/Tencent-Hunyuan/HunyuanVideo) — Tencent Community License (cited only, NOT bundled)
-- [StableAnimator](https://github.com/Francis-Rings/StableAnimator) · [Open-Generative-AI](https://github.com/Anil-matcha/Open-Generative-AI) — MIT
-- [WebGPU-Video-Diffusion](https://github.com/WebGPU-Video-Diffusion/WebGPU-Video-Diffusion) — academic (no LICENSE)
+- [Stable Video Infinity](https://github.com/vita-epfl/Stable-Video-Infinity) · [Paper2Video](https://github.com/showlab/Paper2Video) · [Code2Video](https://github.com/showlab/Code2Video) · [MotionDirector](https://github.com/showlab/MotionDirector)
+- [Hallo](https://github.com/fudan-generative-vision/hallo) · [Champ](https://github.com/fudan-generative-vision/champ) · [First Order Model](https://github.com/AliaksandrSiarohin/first-order-model) · [StableAnimator](https://github.com/Francis-Rings/StableAnimator) · [Make-A-Video](https://github.com/lucidrains/make-a-video-pytorch) · [Open-Generative-AI](https://github.com/Anil-matcha/Open-Generative-AI) · [WebGPU-Video-Diffusion](https://github.com/WebGPU-Video-Diffusion/WebGPU-Video-Diffusion)
 
-**VFX / post-processing / motion graphics**
-- [Three.js](https://github.com/mrdoob/three.js) · [pmndrs/postprocessing](https://github.com/pmndrs/postprocessing) · [Lottie](https://github.com/airbnb/lottie-web) · [Filament](https://github.com/google/filament) · [three-mesh-bvh](https://github.com/gkjohnson/three-mesh-bvh)
+**VFX / post-processing / motion graphics** — MIT/Apache-2.0
+- [Three.js](https://github.com/mrdoob/three.js) · [pmndrs/postprocessing](https://github.com/pmndrs/postprocessing) · [Lottie](https://github.com/airbnb/lottie-web) · [mo.js](https://github.com/mojs/mojs) · [Seriously.js](https://github.com/brianchirls/Seriously.js) · [vfx-js](https://github.com/fand/vfx-js) · [Filament](https://github.com/google/filament) · [three-mesh-bvh](https://github.com/gkjohnson/three-mesh-bvh) · [Tixl](https://github.com/tixl3d/tixl) · [Motionity](https://github.com/alyssaxuu/motionity) · [Astrofox](https://github.com/astrofox-io/astrofox) · [Pixel Composer](https://github.com/Ttanasart-pt/Pixel-Composer) · [nexrender](https://github.com/inlife/nexrender) · [Vue-Lottie](https://github.com/chenqingspring/vue-lottie)
 
-**Cinema pre-production / camera moves**
+**Video editors (in-browser, MIT)** — closest competitors
+- [OpenReel Video](https://github.com/Augani/openreel-video) · [Clypra](https://github.com/AIEraDev/Clypra) · [FreeCut](https://github.com/walterlow/freecut) · [mebm](https://github.com/bwasti/mebm) · [Clip-JS](https://github.com/mohyware/clip-js) · [FableCut](https://github.com/ronak-create/FableCut) · [ai-video-editor](https://github.com/MartinDelophy/ai-video-editor) · [CartCut](https://github.com/cartesiancs/cartcut) · [fabric-video-editor](https://github.com/AmitDigga/fabric-video-editor)
+
+**Image ↔ Video merge / talking-head / subtitles** — Apache-2.0/MIT
+- [InfiniteTalk](https://github.com/MeiGen-AI/InfiniteTalk) · [video-retalking](https://github.com/OpenTalker/video-retalking) · [VideoLingo](https://github.com/Huanshere/VideoLingo) · [video-subtitle-remover](https://github.com/YaoFANGUK/video-subtitle-remover) · [video-subtitle-extractor](https://github.com/YaoFANGUK/video-subtitle-extractor) · [html-video](https://github.com/nexu-io/html-video) · [video-shotcraft](https://github.com/Vincentwei1021/video-shotcraft) · [VideoPipe](https://github.com/sherlockchou86/VideoPipe) · [react-native-video-processing](https://github.com/shahen94/react-native-video-processing) · [Polyvia](https://github.com/Ovilia/Polyvia) · [DPlayer](https://github.com/DIYgod/DPlayer) · [JiaoZiVideoPlayer](https://github.com/lipangit/JiaoZiVideoPlayer) · [videojs-player](https://github.com/surmon-china/videojs-player) · [Cabbage](https://github.com/VideoFlint/Cabbage) · [FFdynamic](https://github.com/Xingtao/FFdynamic)
+
+**Cinema pre-production / camera moves** — inspiration only
 - [PANDORA](https://github.com/22eme-Arkane/PANDORA) — GPL v3 (inspiration only)
 - [Deforum](https://github.com/deforum-art/sd-webui-deforum) — Other license (inspiration only)
 
-The user's own repos (the actual base code, MIT, kalubhalu141-bit):
-[stellarforge](https://github.com/kalubhalu141-bit/stellarforge) · [commercial-video-studio](https://github.com/kalubhalu141-bit/commercial-video-studio) · [cinematic-dating-video](https://github.com/kalubhalu141-bit/cinematic-dating-video) · [blender-ai-studio](https://github.com/kalubhalu141-bit/blender-ai-studio) · [seedance-studio](https://github.com/kalubhalu141-bit/seedance-studio) (local)
+**The user's own repos** (the actual base code, MIT, kalubhalu141-bit)
+- [stellarforge](https://github.com/kalubhalu141-bit/stellarforge) · [commercial-video-studio](https://github.com/kalubhalu141-bit/commercial-video-studio) · [cinematic-dating-video](https://github.com/kalubhalu141-bit/cinematic-dating-video) · [blender-ai-studio](https://github.com/kalubhalu141-bit/blender-ai-studio) · [seedance-studio](https://github.com/kalubhalu141-bit/seedance-studio) (local)
 
 ## ⚠️ What's NOT a fake
 
