@@ -5,10 +5,10 @@ const fs = require('fs');
 const path = require('path');
 const { URL } = require('url');
 const { ENGINES, runEngine, listEngines } = require('./server-engines');
-const { listPowerEngines, runPowerEngine } = require('./server-power');
+const { listPowerEngines, runPowerEngine, POWER_KEYS } = require('./server-power');
+const { listAiEngines, runAiEngine } = require('./server-ai');
 
 const PUBLIC_DIR = path.join(__dirname, 'public');
-const POWER_KEYS = new Set(['viral', 'repurpose', 'thumbnailtext', 'retention', 'ads', 'multilang', 'competitor', 'bts', 'musicbrief', 'captionstyle', 'abtest', 'community', 'emailpr', 'remix']);
 const PORT = process.env.PORT || 3000;
 const GH_TOKEN_FILE = path.join(process.env.USERPROFILE || process.env.HOME || '', '.gh_token');
 let GH_TOKEN = '';
@@ -128,11 +128,21 @@ async function handleApi(req, res, url) {
 
   if (p === '/api/health') {
     const ol = await ollamaStatus();
-    return sendJSON(res, 200, { ok: true, app: 'infinity-video-generator', engines: ENGINES.length + listPowerEngines().length, ollama: ol.ok, ollamaModels: ol.models, ghToken: !!GH_TOKEN, port: PORT });
+    const totalEngines = ENGINES.length + listPowerEngines().length + listAiEngines().length;
+    return sendJSON(res, 200, { ok: true, app: 'infinity-video-generator', engines: totalEngines, base: ENGINES.length, power: listPowerEngines().length, ai: listAiEngines().length, ollama: ol.ok, ollamaModels: ol.models, ghToken: !!GH_TOKEN, port: PORT });
   }
 
   // ---- engines ----
-  if (p === '/api/engines') return sendJSON(res, 200, { engines: [...listEngines(), ...listPowerEngines()], count: ENGINES.length + listPowerEngines().length, total: ENGINES.length + listPowerEngines().length });
+  if (p === '/api/engines') {
+    const all = [...listEngines(), ...listPowerEngines(), ...listAiEngines()];
+    return sendJSON(res, 200, { engines: all, count: all.length, total: all.length, base: ENGINES.length, power: listPowerEngines().length, ai: listAiEngines().length });
+  }
+  if (p === '/api/engines/ai') {
+    const input = {};
+    for (const [k, v] of Object.entries(q)) if (k.startsWith('in_')) input[k.slice(3)] = v;
+    const out = await runAiEngine(q.key, input, callOllama);
+    return sendJSON(res, 200, out);
+  }
   if (p === '/api/engine/run' && POWER_KEYS.has(q.key)) {
     const input = {};
     for (const [k, v] of Object.entries(q)) if (k.startsWith('in_')) input[k.slice(3)] = v;

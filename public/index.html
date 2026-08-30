@@ -251,7 +251,7 @@
 
 <!-- ============ WORKBENCH ============ -->
 <section class="tab" id="tab-workbench">
-  <h2 class="sec">🧠 AI Workbench <span id="wbCount">42 deterministic engines — instant, free, no API key</span></h2>
+  <h2 class="sec">🧠 AI Workbench <span id="wbCount">107 engines — 48 instant rules + 14 LLM power + 45 AI mega · all free, no API key</span></h2>
   <div class="toolbar">
     <input type="text" id="wbSearch" placeholder="🔎 filter engines (e.g. hook, publish, audio)…">
     <button class="btn gray sm" id="wbClear">Clear outputs</button>
@@ -1068,39 +1068,39 @@ let ENGINES = [];
   try {
     const j = await api('/api/engines');
     ENGINES = j.engines || [];
-    $('#wbCount').textContent = (j.total || j.count) + ' engines — 48 instant + ' + (ENGINES.filter(e => e.power).length) + ' LLM power · free, no API key';
+    $('#wbCount').textContent = (j.total || j.count) + ' engines · ' + (j.base || 48) + ' instant rules + ' + (j.power || 14) + ' LLM power + ' + (j.ai || 0) + ' AI mega · all free, no API key';
     renderWB(ENGINES);
   } catch (e) { $('#wbGrid').innerHTML = '<div class="msg show err">Server offline — start server.js</div>'; }
 })();
 function renderWB(list) {
   const groups = {};
   list.forEach(e => { (groups[e.group] = groups[e.group] || []).push(e); });
-  const gorder = ['Scripting','Directing','Look','Planning','Audio','Production','Publish','Strategy','Community','Business','Branding'];
+  const gorder = ['Scripting','Directing','Cinematography','Look','Audio','Accessibility','Marketing','Production','Analytics','Creative','Planning','Publish','Strategy','Community','Business','Branding'];
   let html = '<div class="msg show" style="margin-bottom:12px">🚀 <b>Power engines</b> (marked ⚡) run on your free local Ollama LLM with instant rules fallback — they may take a few seconds while the model thinks.</div>';
   gorder.forEach(g => {
     if (!groups[g]) return;
     html += '<div class="group-label">' + g + ' · ' + groups[g].length + '</div>';
     groups[g].forEach(e => {
-      const pw = e.power ? ' <span style="color:#f2aa4c">⚡LLM</span>' : '';
-      html += '<div class="engine-form" data-key="' + e.key + '"><div class="ef-head"><b>' + esc(e.label) + pw + '</b><span>' + esc(e.group) + '</span></div>';
+      const pw = e.power ? ' <span style="color:#f2aa4c">⚡LLM</span>' : (e.ai ? ' <span style="color:#27d3a1">🤖AI</span>' : '');
+      html += '<div class="engine-form" data-key="' + e.key + '" data-ai="' + (e.ai ? '1' : '0') + '"><div class="ef-head"><b>' + esc(e.label) + pw + '</b><span>' + esc(e.group) + '</span></div>';
       (e.inputs || []).forEach(([inp, ph, def]) => {
         html += '<input type="text" data-in="' + inp + '" placeholder="' + esc(ph) + '" value="' + esc(def || '') + '">';
       });
-      html += '<button class="btn sm">Run</button><button class="btn sm gray" data-cp style="display:none">📋 Copy</button><div class="engine-res"></div></div>';
+      html += '<div style="display:flex;gap:6px;margin-top:6px"><button class="btn sm">▶ Run</button><button class="btn sm gray" data-suggest title="Auto-fill from a similar topic">🤖 AI Suggest</button><button class="btn sm gray" data-cp style="display:none">📋 Copy</button></div><div class="engine-res"></div></div>';
     });
   });
   // any power-only groups not in gorder
   Object.keys(groups).forEach(g => {
-    if (gorder.includes(g)) return;
-    html += '<div class="group-label">' + g + ' · ' + groups[g].length + '</div>';
-    groups[g].forEach(e => {
-      const pw = e.power ? ' <span style="color:#f2aa4c">⚡LLM</span>' : '';
-      html += '<div class="engine-form" data-key="' + e.key + '"><div class="ef-head"><b>' + esc(e.label) + pw + '</b><span>' + esc(e.group) + '</span></div>';
-      (e.inputs || []).forEach(([inp, ph, def]) => {
-        html += '<input type="text" data-in="' + inp + '" placeholder="' + esc(ph) + '" value="' + esc(def || '') + '">';
-      });
-      html += '<button class="btn sm">Run</button><button class="btn sm gray" data-cp style="display:none">📋 Copy</button><div class="engine-res"></div></div>';
+  if (gorder.includes(g)) return;
+  html += '<div class="group-label">' + g + ' · ' + groups[g].length + '</div>';
+  groups[g].forEach(e => {
+    const pw = e.power ? ' <span style="color:#f2aa4c">⚡LLM</span>' : (e.ai ? ' <span style="color:#27d3a1">🤖AI</span>' : '');
+    html += '<div class="engine-form" data-key="' + e.key + '" data-ai="' + (e.ai ? '1' : '0') + '"><div class="ef-head"><b>' + esc(e.label) + pw + '</b><span>' + esc(e.group) + '</span></div>';
+    (e.inputs || []).forEach(([inp, ph, def]) => {
+      html += '<input type="text" data-in="' + inp + '" placeholder="' + esc(ph) + '" value="' + esc(def || '') + '">';
     });
+    html += '<div style="display:flex;gap:6px;margin-top:6px"><button class="btn sm">▶ Run</button><button class="btn sm gray" data-suggest title="Auto-fill from a similar topic">🤖 AI Suggest</button><button class="btn sm gray" data-cp style="display:none">📋 Copy</button></div><div class="engine-res"></div></div>';
+  });
   });
   $('#wbGrid').innerHTML = html || '<div class="msg show err">no engines</div>';
 }
@@ -1111,9 +1111,63 @@ $('#wbGrid').addEventListener('click', async e => {
   const input = {};
   f.querySelectorAll('input[data-in]').forEach(i => input[i.dataset.in] = i.value);
   const res = f.querySelector('.engine-res');
+
+  // AI Suggest button — auto-fill from a similar topic (uses idea pool)
+  if (b.hasAttribute('data-suggest')) {
+    const pool = {
+      cinematic: 'a cinematic time-lapse of a futuristic city at golden hour, neon reflections, drone orbit',
+      nature: 'a serene aerial shot of a misty forest at dawn, birds, soft light',
+      product: 'a premium product unboxing, hero shot, studio lighting, slow rotate',
+      tutorial: 'a step-by-step cooking tutorial, overhead camera, bright kitchen',
+      story: 'a lonely astronaut discovers a hidden garden inside an asteroid, hope',
+      music: 'a music video for an indie track, quick cuts, abstract lights',
+      interview: 'an interview with an expert in a cozy studio, two cameras, soft key light',
+      travel: 'a travel vlog in Tokyo, street food, neon alleys, day to night transition',
+      fitness: 'a 30-day fitness transformation montage, gym + outdoor, sweat + progress',
+      kids: 'a colorful educational video for kids, animation, friendly host, simple words',
+      tech: 'a deep-dive review of a new AI tool, screen recording + presenter',
+      food: 'a satisfying food prep video, close-up sizzle, vibrant colors, ASMR-style audio',
+      gaming: 'a gameplay walkthrough of an indie hit, voiceover, cinematic camera mods',
+      fashion: 'a fall fashion lookbook, slow-motion walk, natural light, moody grade',
+      pets: 'a heartwarming rescue-pet story, golden hour, handheld, happy ending',
+      wedding: 'a wedding highlight reel, drone establishing + handheld vows + party dance',
+      realestate: 'a luxury home tour, glide cam, golden hour exteriors, soft music',
+      finance: 'a beginner-friendly explainer of index funds, whiteboard + presenter',
+      scifi: 'a sci-fi short, neon alley, rain, cyberpunk look, character reveal'
+    };
+    const topic = (input.prompt || input.title || input.topic || input.idea || input.story || input.text || input.line || input.product || input.scene || '').toLowerCase();
+    let pick = 'cinematic';
+    if (/food|cook|recipe|kitchen/.test(topic)) pick = 'food';
+    else if (/nature|forest|animal|wildlife|bird/.test(topic)) pick = 'nature';
+    else if (/product|unbox|review|tech|gadget/.test(topic)) pick = 'tech';
+    else if (/tutorial|how to|learn|guide|class/.test(topic)) pick = 'tutorial';
+    else if (/story|narrative|character|drama/.test(topic)) pick = 'story';
+    else if (/music|song|band|singer|album/.test(topic)) pick = 'music';
+    else if (/interview|talk|podcast|chat/.test(topic)) pick = 'interview';
+    else if (/travel|trip|japan|paris|city|adventure/.test(topic)) pick = 'travel';
+    else if (/fit|gym|workout|train/.test(topic)) pick = 'fitness';
+    else if (/kid|child|education|learn/.test(topic)) pick = 'kids';
+    else if (/unbox|review|gear/.test(topic)) pick = 'product';
+    else if (/game|gameplay|stream/.test(topic)) pick = 'gaming';
+    else if (/fashion|style|outfit|wear/.test(topic)) pick = 'fashion';
+    else if (/pet|dog|cat|rescue/.test(topic)) pick = 'pets';
+    else if (/wedding|bride|groom/.test(topic)) pick = 'wedding';
+    else if (/house|home|real estate|apartment/.test(topic)) pick = 'realestate';
+    else if (/money|invest|stock|fund|finance/.test(topic)) pick = 'finance';
+    else if (/sci-fi|cyber|space|robot|alien/.test(topic)) pick = 'scifi';
+    const filled = pool[pick];
+    // pick the first non-empty input
+    const inputs = f.querySelectorAll('input[data-in]');
+    for (const i of inputs) { if (!i.value) { i.value = filled; res.textContent = '🤖 AI filled input with: "' + filled.slice(0, 60) + '..."'; res.classList.add('show'); return; } }
+    res.textContent = '🤖 all inputs already filled — try a new topic'; res.classList.add('show');
+    return;
+  }
+
   res.textContent = '⏳ running…'; res.classList.add('show');
   try {
-    const j = await api('/api/engine/run?key=' + key + '&' + Object.entries(input).map(([a, c]) => 'in_' + a + '=' + encodeURIComponent(c)).join('&'));
+    const isAi = f.dataset.ai === '1';
+    const endpoint = isAi ? '/api/engines/ai' : '/api/engine/run';
+    const j = await api(endpoint + '?key=' + key + '&' + Object.entries(input).map(([a, c]) => 'in_' + a + '=' + encodeURIComponent(c)).join('&'));
     const r = j.result || {};
     res.textContent = formatEngine(r);
     const cp = f.querySelector('[data-cp]');
